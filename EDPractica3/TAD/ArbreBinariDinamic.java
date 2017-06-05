@@ -1,5 +1,7 @@
 package TAD;
 
+import TAD.LlistaGenericaNoOrd;
+
 public class ArbreBinariDinamic<E> implements TADArbreBinari<E> {
 	private Node<E> arrel;
 	

@@ -1,4 +1,7 @@
-package TAD;
+package Interface;
+
+import TAD.LlistaGenericaNoOrd;
+
 /**
  * Interface per a definir l'arbre binari
  * 
@@ -35,7 +38,7 @@ public interface TADArbreBinari<E> {
 	 */
 	public boolean esBuit();
 	
-	// Operacions que complementen l'especificació bàsica dels arbres binaris
+	// Operacions que complementen l'especificaciï¿½ bï¿½sica dels arbres binaris
 	
 	/**
 	 * Comprova si l'arbre binari es equilibrat
@@ -43,17 +46,17 @@ public interface TADArbreBinari<E> {
 	 */
 	public boolean esEquilibrat();
 	/**
-	 * Mètode que retorna la llista d'elements de l'arbre segons el recorregut preordre
+	 * Mï¿½tode que retorna la llista d'elements de l'arbre segons el recorregut preordre
 	 * @return llista d'elements de l'arbre en preordre
 	 */
 	public LlistaGenericaNoOrd<E> preordre();
 	/**
-	 * Mètode que retorna la llista d'elements de l'arbre segons el recorregut inordre
+	 * Mï¿½tode que retorna la llista d'elements de l'arbre segons el recorregut inordre
 	 * @return llista d'elements de l'arbre en inordre
 	 */
 	public LlistaGenericaNoOrd<E> inordre();
 	/**
-	 * Mètode que retorna la llista d'elements de l'arbre segons el recorregut postordre
+	 * Mï¿½tode que retorna la llista d'elements de l'arbre segons el recorregut postordre
 	 * @return llista d'elements de l'arbre en postordre
 	 */
 	public LlistaGenericaNoOrd<E> postordre();
