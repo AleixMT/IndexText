@@ -24,7 +24,7 @@ public class Main {
 		
 		System.out.println("Es equilibrat "+arbre.esEquilibrat());
 		
-		System.out.println("Alçada arbre "+arbre.alcada());
+		System.out.println("Alï¿½ada arbre "+arbre.alcada());
 	
 	}
 

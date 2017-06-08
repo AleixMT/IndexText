@@ -1,5 +1,6 @@
 package TAD;
 
+
 public class Node<E> {
 	private E element;
 	private TADArbreBinari<E> fillEsq, fillDret;

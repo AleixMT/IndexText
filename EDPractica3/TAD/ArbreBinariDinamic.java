@@ -1,5 +1,6 @@
 package TAD;
 
+
 public class ArbreBinariDinamic<E> implements TADArbreBinari<E> {
 	private Node<E> arrel;
 	
