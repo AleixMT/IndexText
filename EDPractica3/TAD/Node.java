@@ -1,19 +1,24 @@
 package TAD;
 
-public class Node<E> {
+import Tipus.Index;
+
+/**
+ * Classe Node. Aquesta classe funciona com un wrapper per a l'element genèric E, de tal 
+ * manera que podem utilitzar els punters que estàn continguts al wrapper independentment
+ * que vinguin d'arbre o de hashing (classes filles NodeAVL i NodeHash respectivament).
+ * 
+ * Hem fet això per a intentar utilitzar les dues estructures de dades com un sola (una
+ * sola instància) per a poder utilitzar els métodes que necessita l'índex sense saber
+ * quina ED estem utilitzant.
+ * @author amt
+ *
+ * @param <E>
+ */
+public class Node<E extends Index> {
 	private E element;
-	private TADArbreBinari<E> fillEsq, fillDret;
 	
 	public Node (E elem) {
 		element=elem;
-		fillEsq=null;
-		fillDret=null;
-	}
-	
-	public Node (TADArbreBinari<E> fllEsq, E elem, TADArbreBinari<E> fllDret) {
-		element=elem;
-		fillEsq=fllEsq;
-		fillDret=fllDret;
 	}
 
 	public E getElement() {
@@ -24,26 +29,11 @@ public class Node<E> {
 		this.element = element;
 	}
 
-	public TADArbreBinari<E> getFillEsq() {
-		return fillEsq;
-	}
-
-	public void setFillEsq(TADArbreBinari<E> fillEsq) {
-		this.fillEsq = fillEsq;
-	}
-
-	public TADArbreBinari<E> getFillDret() {
-		return fillDret;
-	}
-
-	public void setFillDret(TADArbreBinari<E> fillDret) {
-		this.fillDret = fillDret;
-	}
-
 	@Override
 	public String toString() {
-		return "Node [element=" + element + ", fillEsq=" + fillEsq + ", fillDret=" + fillDret + "]";
+		return "Node [element=" + element + "]";
 	}
+	
 	
 	
 }

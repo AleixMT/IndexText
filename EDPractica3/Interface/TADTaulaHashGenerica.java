@@ -1,30 +1,33 @@
 package Interface;
 
+import TAD.NodeHash;
+import Tipus.Index;
+
 /**
  * Interface per a definir una taula de hash generica.
  * 
  * @author Professors de l'assignatura 16-17
  *
  */
-public interface TADTaulaHashGenerica<K,V> {
+public interface TADTaulaHashGenerica<E extends Index> extends TADIndex<E>{
 	/**
 	 * Afegeix un element a la taula de hash
 	 * @param k - clau de l'element a afegir
 	 * @param v - element a afegir
 	 */
-	public void afegir(K k,V v);
+	public void afegir(E e);
 	
 	/**
 	 * Esborra un element a la taula de hash
 	 * @param k - clau de l'element a esborrar
 	 */	
-	public V esborrar(K k);
+	public void esborrar(E e);
 	
 	/**
 	 * Consulta un element a la taula de hash
 	 * @param k - clau de l'element a consultar
 	 */	
-	public V consultar(K k);	
+	public NodeHash<E> consultar(E e);	
 	
 	/**
 	 * Retorna el factor de c�rrega actual de la taula de hash
