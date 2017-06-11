@@ -34,8 +34,4 @@ public class NodeHash<E extends Index> extends Node<E> {
 	public String toString() {
 		return super.toString()+"NodeHash [ref=" + ref + "]";
 	}
-	
-	
-	
-	
 }
