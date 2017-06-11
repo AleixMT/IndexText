@@ -1,6 +1,7 @@
 package TAD;
 
 import Interface.TAD_ABC;
+import Tipus.Index;
 
 public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cloneable {
 	@SuppressWarnings("hiding")
@@ -76,6 +77,16 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 		return null;
 	}
 
+	public boolean afegirAparicio(K k, int plana, int linia){
+		Index i;
+		if ((i = (Index)(buscarElement(k)))!=null)
+		{
+			i.AfegirAparicio(plana, linia);
+			return true;
+		}
+		return false;
+	}
+	
 	public void esborrar(K k) {
 		if (arrel!=null) {
 			if (arrel.k.compareTo(k)>0) {

@@ -9,7 +9,7 @@ import Tipus.Index;
  *
  * @param <E>
  */
-public class NodeHash<K extends Comparable <K>, E> extends Node{
+public class NodeHash<K extends Comparable <K>, E> {
 	private NodeHash<K, E> ref;
 	
 	public NodeHash(K k) {
