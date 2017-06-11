@@ -1,14 +1,13 @@
 package TAD;
 
-import Tipus.Index;
+import java.util.Iterator;
 
-
-public class Iterator<E extends Index>{
-	private LlistaNode<E> llista;	//nou atribut que ens guardar� una copia de la llista actual de punts
+public class MeuIterator<T> implements Iterator<T> {
+	private LlistaGenericaNoOrd<T> llista;	//nou atribut que ens guardarà una copia de la llista actual de punts
 	private int posicioIterator;
 	
-	public Iterator(LlistaNode<E> ll) {
-		llista=new LlistaNode<E>(ll.getNum());
+	public MeuIterator(LlistaGenericaNoOrd<T> ll) {
+		llista=new LlistaGenericaNoOrd<T>(ll.getNum());
 		for (int i=0; i<ll.getNum(); i++) {
 			llista.afegirElement(ll.consultarIessim(i));
 		}
@@ -19,8 +18,8 @@ public class Iterator<E extends Index>{
 		return ((posicioIterator<llista.getNum()));
 	}
 
-	public Node<E> next() {
-		Node<E> aux=llista.consultarIessim(posicioIterator);
+	public T next() {
+		T aux=llista.consultarIessim(posicioIterator);
 		posicioIterator++;
 		return aux;
 	}
