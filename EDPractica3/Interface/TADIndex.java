@@ -10,7 +10,7 @@ public abstract interface TADIndex <K extends Comparable<K>, E>{
 	 * Afegim una nova aparició de l'element K
 	 * @param k
 	 */
-	public boolean afegirAparicio(K k);
+	public boolean afegirAparicio(K k, int plana, int linia);
 	
 	/**
 	 * Esborra un element de l'index (deixa de fer el seguiment)
@@ -21,4 +21,8 @@ public abstract interface TADIndex <K extends Comparable<K>, E>{
 	 * Consulta un element (paraula) de l'índex
 	 */	
 	public E consultar(K k);
+	/**
+	 * Mostra per pantalla tot l'index
+	 */
+	public String toString();
 }

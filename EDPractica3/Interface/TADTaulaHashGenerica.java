@@ -28,7 +28,7 @@ public interface TADTaulaHashGenerica<K,E> {
 	public E consultar(K k);	
 	
 	/**
-	 * Retorna el factor de càrrega actual de la taula de hash
+	 * Retorna el factor de cï¿½rrega actual de la taula de hash
 	 */
 	public float getFactorDeCarrega();
 		
@@ -36,4 +36,8 @@ public interface TADTaulaHashGenerica<K,E> {
 	 * Mostra la taula de hash per consola
 	 */
 	public void mostrarTaula();
+	/**
+	 * Mostra per pantalla tot l'index
+	 */
+	public String toString();
 }

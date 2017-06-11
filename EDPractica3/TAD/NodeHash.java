@@ -12,8 +12,8 @@ import Tipus.Index;
 public class NodeHash<K extends Comparable <K>, E> extends Node{
 	private NodeHash<K, E> ref;
 	
-	public NodeHash(E e) {
-		super (e);
+	public NodeHash(K k) {
+		super (k);
 		this.ref = null;
 	}
 	
