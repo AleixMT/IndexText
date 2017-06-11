@@ -1,21 +1,24 @@
 package Interface;
 
-import TAD.Node;
-import Tipus.Index;
-
-public abstract interface TADIndex <E extends Index>{
+public abstract interface TADIndex <K extends Comparable<K>, E>{
 	/**
-	 * Afegeix un element a l'índex
+	 * Afegeix un element del que es fa seguiment a l'index
+	 * @param k
 	 */
-	public void afegir(E e);
+	public boolean afegir(K k);
+	/**
+	 * Afegim una nova aparició de l'element K
+	 * @param k
+	 */
+	public boolean afegirAparicio(K k);
 	
 	/**
-	 * Esborra un element (paraula) de l'índex
-	 */	
-	public void esborrar(E e);
+	 * Esborra un element de l'index (deixa de fer el seguiment)
+	 */
+	public boolean esborrar(K k);
 	
 	/**
 	 * Consulta un element (paraula) de l'índex
 	 */	
-	public Node<E> consultar(E e);
+	public E consultar(K k);
 }

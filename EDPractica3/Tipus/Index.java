@@ -3,12 +3,10 @@ package Tipus;
 import java.util.Arrays;
 
 public class Index{
-		private String paraula;
 		private Aparicio[] llista;
 		private int pos;
 		
 		public Index(String paraula){
-			this.paraula = paraula;
 			this.pos = 0;
 		}
 		
@@ -29,39 +27,32 @@ public class Index{
 				return true;
 			}
 		}
-		
-		public boolean equals(String paraula){
-			return this.paraula.equals(paraula);
-		}
-		
-		public int compareTo(Index i){
-			return this.paraula.compareTo(i.getParaula());
-		}
-		
-		public int compareTo(String paraula){
-			return this.paraula.compareTo(paraula);
-		}
-		
-		public String getParaula() {
-			return paraula;
-		}
-		
-		public void setParaula(String paraula) {
-			this.paraula = paraula;
-		}
-		
+
 		public Aparicio[] getLlista() {
 			return llista;
 		}
-		
+
 		public void setLlista(Aparicio[] llista) {
 			this.llista = llista;
 		}
 
-		public String toString() {
-			return "Index [paraula=" + paraula + ", llista="
-					+ Arrays.toString(llista) + "]";
+		public int getPos() {
+			return pos;
 		}
+
+		public void setPos(int pos) {
+			this.pos = pos;
+		}
+
+		@Override
+		public String toString() {
+			return "Index [llista=" + Arrays.toString(llista) + ", pos=" + pos
+					+ "]";
+		}
+		
+		
+
+		
 		
 		
 }

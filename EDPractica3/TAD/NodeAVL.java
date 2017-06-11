@@ -8,27 +8,19 @@ import Tipus.Index;
  *
  * @param <E>
  */
-public class NodeAVL<E extends Index> extends Node<E> {
+public class NodeAVL<K extends Comparable<K>, E> extends Node<K,E> {
 	
-	private NodeAVL<E> fe;
-	private NodeAVL<E> fd;
+	private NodeAVL<K,E> fe;
+	private NodeAVL<K,E> fd;
+	private NodeAVL<K,E> arrel;
 	
-	public NodeAVL(E e) {
-		super (e);
+	public NodeAVL(K k) {
+		super (k);
 		this.fe=null;
 		this.fd=null;
+		this.arrel = null;
 	}
 	
-	public NodeAVL(E e, NodeAVL<E> fe, NodeAVL<E> fd) {
-		super (e);
-		this.fe=fe;
-		this.fd=fd;
-	}
-
-	@Override
-	public String toString() {
-		return super.toString()+"NodeAVL [fe=" + fe + ", fd=" + fd + "]";
-	}
 /**
  * Per la manera com està definit el nostre arbre, el métode de recòrrer en inordre s'ha
  * d'implementar en la classe NodeABC
@@ -54,8 +46,8 @@ public class NodeAVL<E extends Index> extends Node<E> {
 	 * Rep un element E i busca la posició on ha de ser inserit. Utilitza crides recursives a
 	 * altres nodesAVL per a trobar la posició final 
 	 */
-	public void afegir(E e) {
-		if (this.getElement().equals(e)) this.setElement(e);
+	public void afegir(Index e) {
+		if (this.getE().equals(e)) this.setElement(e);
 		else if (this.getElement().compareTo(e)>0) 
 		{
 			if (this.getFe()!=null) this.getFe().afegir(e);
@@ -68,19 +60,5 @@ public class NodeAVL<E extends Index> extends Node<E> {
 		}
 	}
 	
-	public NodeAVL<E> getFe() {
-		return fe;
-	}
-
-	public void setFe(NodeAVL<E> fe) {
-		this.fe = fe;
-	}
-
-	public NodeAVL<E> getFd() {
-		return fd;
-	}
-
-	public void setFd(NodeAVL<E> fd) {
-		this.fd = fd;
-	}
+	
 }

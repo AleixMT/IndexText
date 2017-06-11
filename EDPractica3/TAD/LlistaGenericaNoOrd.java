@@ -1,6 +1,6 @@
 package TAD;
 /**
- * Llista genèrica no ordenada
+ * Llista genï¿½rica no ordenada
  * 
  * @author Professors de l'assignatura 16-17
  *
@@ -45,16 +45,10 @@ public class LlistaGenericaNoOrd<T> implements Iterable<T> {
 		return num;
 	}
 
-	@Override
 	public String toString() {
 		return "LlistaPunts [llista=" + Arrays.toString(llista) + ", num=" + num + "]";
 	}
 
-	@Override
-	public Iterator<T> iterator() {
-		MeuIterator<T> pI=new MeuIterator<T>(this);
-		return pI;
-	}
 
 	
 	

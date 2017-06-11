@@ -7,8 +7,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-import TAD.Multillista;
-
 
 public class Main {
 	static Scanner teclat=new Scanner(System.in);

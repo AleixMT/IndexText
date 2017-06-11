@@ -3,9 +3,9 @@ package TAD;
 import Interface.TADAVL;
 import Tipus.Index;
 
-public class AVLdinamic<E extends Index> implements TADAVL<E> {
+public class AVLdinamic<K extends Comparable<K>, E> implements TADAVL<E> {
 	
-	private NodeAVL<E> arrel;
+	private NodeAVL arrel;
 	
 	public AVLdinamic(){
 		arrel = null;

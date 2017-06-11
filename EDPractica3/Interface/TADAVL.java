@@ -1,33 +1,28 @@
 package Interface;
-
-import TAD.NodeAVL;
-import Tipus.Index;
-
 /**
  * Interface per a definir l'arbre binari AVL per a la pràctica 3
  * 
  * @author Aleix Mariné
  *
  */
-public interface TADAVL<E extends Index> extends TADIndex<E>{
-	/**
-	 * Insereix un element E a l'arbre AVL mantenint l'arbre equilibrat
-	 * @param e
-	 */
-	public void afegir(E e);
-	
-	/**
-	 * Esborra un element E de l'arbre AVL
-	 * @param e
-	 */
-	public void esborrar(E e);
+public interface TADAVL<K extends Comparable<K>, E> extends TADIndex<K, E>{
 
 	/**
-	 * El següent métode busca un element E dins l'arbre i retorna el node que el conté (NodeAVL)
-	 * Retorna null si no el troba, pel que aquest métode funciona com un existeix.
+	 * Afegeix un element del que es fa seguiment a l'index
 	 * @param k
-	 * @return
 	 */
-	public NodeAVL<E> Consultar(E e);
-
+	public boolean afegir(K k);
+	/**
+	 * Afegim una nova aparició de l'element K
+	 * @param k
+	 */
+	public boolean afegirAparicio(K k);
+	/**
+	 * Esborra un element de l'index (deixa de fer el seguiment)
+	 */
+	public boolean esborrar(K k);
+	/**
+	 * Consulta aparicions d'un element de l'índex
+	 */	
+	public E consultar(K k);
 }
