@@ -3,30 +3,30 @@ package TAD;
 import Tipus.Index;
 
 /**
- * Classe Wrapper per a l'element genéric en un NodeHash.
- * Al ser encadenada indirecta necessita contenir un punter al següent NodeHash
+ * Classe Wrapper per a l'element generic en un NodeHash.
+ * Al ser encadenada indirecta necessita contenir un punter al seguent NodeHash
  * @author amt
  *
  * @param <E>
  */
-public class NodeHash<E extends Index> extends Node<E> {
-	private NodeHash<E> ref;
+public class NodeHash<K extends Comparable <K>, E> extends Node{
+	private NodeHash<K, E> ref;
 	
 	public NodeHash(E e) {
 		super (e);
 		this.ref = null;
 	}
 	
-	public NodeHash(E e, NodeHash<E> ref) {
+	public NodeHash(E e, NodeHash<K, E> ref) {
 		super (e);
 		this.ref = ref;
 	}
 
-	public NodeHash<E> getRef() {
+	public NodeHash<K, E> getRef() {
 		return ref;
 	}
 
-	public void setRef(NodeHash<E> ref) {
+	public void setRef(NodeHash<K, E> ref) {
 		this.ref = ref;
 	}
 

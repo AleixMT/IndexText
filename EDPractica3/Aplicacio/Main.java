@@ -26,9 +26,9 @@ public class Main {
 	 * Metode per a escollir la estructura a implementar.
 	 * @return TAD - estructura creada.
 	 */
-	public static TAD menu(){ //mostra el menu i inicialitza el TAD
+	public static TAD<Node> menu(){ //mostra el menu i inicialitza el TAD
 		int opt=0;
-		TAD tad = null;
+		TAD<Node> tad = null;
 		while (tad==null) //iterarem mentre que el usuari no indiqui l'estructura
 		{
 			System.out.println("Quina versio vols utilitzar?");
