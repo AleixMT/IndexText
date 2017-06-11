@@ -16,6 +16,14 @@ public interface TADTaulaHashGenerica<K,E> {
 	public void afegir(K k, E e);
 	
 	/**
+	 * Afegeix una aparicio d'un element a la taula de hash
+	 * @param k - clau de l'element on hem d'afegir l'aparicio
+	 * @param plana - plana on es troba l'element
+	 * @param linia - linia on es troba l'element
+	 */
+	public void afegirAparicio(K k, int plana, int linia);
+	
+	/**
 	 * Esborra un element a la taula de hash
 	 * @param k - clau de l'element a esborrar
 	 */	
@@ -28,7 +36,7 @@ public interface TADTaulaHashGenerica<K,E> {
 	public E consultar(K k);	
 	
 	/**
-	 * Retorna el factor de c�rrega actual de la taula de hash
+	 * Retorna el factor de carrega actual de la taula de hash
 	 */
 	public float getFactorDeCarrega();
 		

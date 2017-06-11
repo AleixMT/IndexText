@@ -1,5 +1,7 @@
 package TAD;
 
+import java.util.Arrays;
+import Tipus.Index;
 import Interface.TADTaulaHashGenerica;
 
 public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, E> implements TADTaulaHashGenerica<K, E> {
@@ -23,8 +25,8 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, E> implement
 	public void afegir(K k, E e) {
 		int clauHash = 	Math.abs(e.hashCode() % capacitatTaula);
 
-		if (taulaElements[clauHash] == null){
-			taulaElements[clauHash] = new NodeHash<K, E>(k);
+		if (taulaElements[clauHash] == null){//si esta buida
+			taulaElements[clauHash] = new NodeHash<K, E>(k); //creem node
 			this.numElements++;
 			// analitzar colisions
 			numColisions[clauHash]++;
@@ -52,6 +54,17 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, E> implement
 		}
 	}
 
+	public void afegirAparicio(K k, int plana, int linia) {
+		int clauHash = k.hashCode() % capacitatTaula; //calculem la posicio de la clau
+		NodeHash<K, E> n = taulaElements[clauHash];
+		
+		while (!n.getK().equals(k)){
+			n= n.getRef();//anar al seguent
+		}
+		Index index = (Index)(n.getE());
+		index.AfegirAparicio(plana, linia);
+	}
+	
 	public E esborrar(K k) {
 		int clauHash = k.hashCode() % capacitatTaula;
 
@@ -84,6 +97,7 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, E> implement
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public E consultar(K k) {
 		int clauHash = k.hashCode() % capacitatTaula;
 		NodeHash<K, E> n = taulaElements[clauHash];
@@ -133,4 +147,9 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, E> implement
 		}
 		System.out.println("El numero de valors diferents que tenim a la taula es de "+totalElements);
 	}
+	@Override
+	public String toString() {
+		return "Index: " + Arrays.toString(taulaElements);
+	}
+	
 }
