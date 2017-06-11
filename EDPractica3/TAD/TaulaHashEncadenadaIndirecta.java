@@ -24,7 +24,7 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, E> implement
 		int clauHash = 	Math.abs(e.hashCode() % capacitatTaula);
 
 		if (taulaElements[clauHash] == null){
-			taulaElements[clauHash] = new NodeHash<K, E>(k, e, null);
+			taulaElements[clauHash] = new NodeHash<K, E>(k);
 			this.numElements++;
 			// analitzar colisions
 			numColisions[clauHash]++;
@@ -32,18 +32,18 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, E> implement
 		}
 		else {
 			NodeHash<K, E> nant = taulaElements[clauHash];
-			NodeHash<K, E> n = nant.getSeguent();
+			NodeHash<K, E> n = nant.getRef();
 
-			while (n != null && !nant.getClau().equals(k)) {
+			while (n != null && !nant.getK().equals(k)) {
 				nant = n;
-				n = n.getSeguent();
+				n = n.getRef();
 			}
 
-			if (nant.getClau().equals(k))	//substituir
-				nant.setValor(e);
+			if (nant.getK().equals(k))	//substituir
+				nant.setE(e);
 			else {							//inserir
-				NodeHash<K, E> nouNode = new NodeHash<K, E>(k, e, null);
-				nant.setSeguent(nouNode);
+				NodeHash<K, E> nouNode = new NodeHash<K, E>(k);
+				nant.setRef(nouNode);
 				this.numElements++;
 				// analitzar colisions
 				numColisions[clauHash]++;
@@ -52,32 +52,31 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, E> implement
 		}
 	}
 
-	@Override
 	public E esborrar(K k) {
 		int clauHash = k.hashCode() % capacitatTaula;
 
 		NodeHash<K, E> nant = taulaElements[clauHash];
 
 		if (nant != null) {
-			if (nant.getClau().equals(k)){
-				taulaElements[clauHash] = nant.getSeguent();
+			if (nant.getK().equals(k)){
+				taulaElements[clauHash] = nant.getRef();
 				numElements--;
-				return nant.getValor();
+				return (E) nant.getE();
 			}
 			else {
 
-				NodeHash<K, E> n = nant.getSeguent();
-				while (n != null && !n.getClau().equals(k)) {
+				NodeHash<K, E> n = nant.getRef();
+				while (n != null && !n.getK().equals(k)) {
 					nant = n;
-					n = n.getSeguent();
+					n = n.getRef();
 				}
 				
 				if (n==null)
 					return null;
 				else{
-					nant.setSeguent(n.getSeguent());
+					nant.setRef(n.getRef());
 					numElements--;
-					return n.getValor();
+					return (E) n.getE();
 				}					
 			}			
 		}
@@ -89,10 +88,10 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, E> implement
 		int clauHash = k.hashCode() % capacitatTaula;
 		NodeHash<K, E> n = taulaElements[clauHash];
 
-		while (n != null && !n.getClau().equals(k))
-			n = n.getSeguent();
+		while (n != null && !n.getK().equals(k))
+			n = n.getRef();
 
-		return (n != null) ? n.getValor() : null;
+		return (E) ((n != null) ? n.getE() : null);
 	}
 
 	public float getFactorDeCarrega() {
@@ -106,9 +105,9 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, E> implement
 			NodeHash<K, E> nant = taulaElements[i];
 
 			while (nant != null) {
-				System.out.print(nant.getClau().toString() + "("
-							+ nant.getValor().toString() + ") ");
-				nant = nant.getSeguent();
+				System.out.print(nant.getK().toString() + "("
+							+ nant.getE().toString() + ") ");
+				nant = nant.getRef();
 			}
 
 			System.out.println("");

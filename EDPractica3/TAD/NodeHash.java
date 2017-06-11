@@ -17,8 +17,8 @@ public class NodeHash<K extends Comparable <K>, E> extends Node{
 		this.ref = null;
 	}
 	
-	public NodeHash(E e, NodeHash<K, E> ref) {
-		super (e);
+	public NodeHash(K k, NodeHash<K, E> ref) {
+		super (k);
 		this.ref = ref;
 	}
 
@@ -30,7 +30,6 @@ public class NodeHash<K extends Comparable <K>, E> extends Node{
 		this.ref = ref;
 	}
 
-	@Override
 	public String toString() {
 		return super.toString()+"NodeHash [ref=" + ref + "]";
 	}
