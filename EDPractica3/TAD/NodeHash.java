@@ -12,13 +12,13 @@ import Tipus.Index;
 public class NodeHash<K extends Comparable <K>, E> extends Node{
 	private NodeHash<K, E> ref;
 	
-	public NodeHash(E e) {
-		super (e);
+	public NodeHash(K k) {
+		super (k);
 		this.ref = null;
 	}
 	
-	public NodeHash(E e, NodeHash<K, E> ref) {
-		super (e);
+	public NodeHash(K k, NodeHash<K, E> ref) {
+		super (k);
 		this.ref = ref;
 	}
 
@@ -30,7 +30,6 @@ public class NodeHash<K extends Comparable <K>, E> extends Node{
 		this.ref = ref;
 	}
 
-	@Override
 	public String toString() {
 		return super.toString()+"NodeHash [ref=" + ref + "]";
 	}

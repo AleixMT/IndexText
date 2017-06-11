@@ -7,6 +7,12 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+import Interface.TADIndex;
+import TAD.AVLdinamic;
+import TAD.Node;
+import TAD.TaulaHashEncadenadaIndirecta;
+import Tipus.Index;
+
 
 public class Main {
 	static Scanner teclat=new Scanner(System.in);
@@ -17,7 +23,7 @@ public class Main {
 	public static void main(String[] args) {
 		while (true) //bucle infinit del menu
 		{
-			TAD tad = menu(); //preguntem al usuari quina estructura vol i la inicialitzem
+			TADIndex tad = menu(); //preguntem al usuari quina estructura vol i la inicialitzem
 			llegirFitxer(tad); //Passem el tad per a que llegir fitxer afegeixi les paraules indicades
 			consultes(tad);	// menu d'opcions
 		}
@@ -26,9 +32,9 @@ public class Main {
 	 * Metode per a escollir la estructura a implementar.
 	 * @return TAD - estructura creada.
 	 */
-	public static TAD<Node> menu(){ //mostra el menu i inicialitza el TAD
+	public static TADIndex<String, Index> menu(){ //mostra el menu i inicialitza el TAD
 		int opt=0;
-		TAD<Node> tad = null;
+		TADIndex<String, Index> tad = null;
 		while (tad==null) //iterarem mentre que el usuari no indiqui l'estructura
 		{
 			System.out.println("Quina versio vols utilitzar?");
@@ -40,13 +46,13 @@ public class Main {
 				opt=teclat.nextInt();
 				switch(opt) {
 				case 1: 
-					//tad = new TAD (((TADGeneric<Assignatura>) new TaulaHash<E>());	
+					tad = (TADIndex<String, Index>) new TaulaHashEncadenadaIndirecta<String, Index>(1000);	
 					break;
 				case 2: 
-					//tad = new TAD (((TADGeneric<Assignatura>) new ArbreAVL<E>());
+					tad = (TADIndex<String, Index>) new AVLdinamic<String, Index>();
 					break; 
 				case 3: 
-					//tad = new TAD (((TADGeneric<Assignatura>) new JavaUtil<E>());
+					tad = (TADIndex<String, Index>) new JavaUtil<String, Index>();
 					break;
 				default: System.out.println("Aquesta opcio no esta a la llista. \n");
 				break;	//Funciona com una excepcio per a un valor numeric no acceptat
@@ -63,7 +69,7 @@ public class Main {
 	/**
 	 * Metode per a consultar les dades de l'estructura
 	 */
-	public static void consultes(/*Multillista tad*/){ //mostra les consultes
+	public static void consultes(TADIndex tad){ //mostra les consultes
 		int opt=0;
 		long ti, tf; // temps per a mesurar l'eficiencia de l'algorisme
 		boolean exit = false;
@@ -82,13 +88,13 @@ public class Main {
 				opt=teclat.nextInt();
 				switch(opt) {
 				case 1:
-					//iterator de l'estructura
+					System.out.println(tad.toString);
 					break;
 				case 2: 
 					System.out.print("Indica la paraula que vols consultar: ");
 					entry = teclat.next();
 					ti=System.nanoTime();
-					if 	(true/*!tad.sumariAlumne(entry)*/){
+					if 	(tad.consultar(entry)==null){
 						System.out.print("Aquesta paraula no es troba en l'estructura.");
 					}
 					break;
@@ -96,7 +102,7 @@ public class Main {
 					System.out.print("Indica la paraula que vols esborrar: ");
 					entry = teclat.next();
 					ti=System.nanoTime();
-					if (true/*!tad.sumariAssignatura(entryint)*/){
+					if (tad.consultar(entry)==null){
 						System.out.print("Aquesta paraula no es troba en l'estructura.");
 					}
 					break; 
@@ -123,11 +129,11 @@ public class Main {
 	/**
 	 * Metode per a llegir fitxers i obtenir dades
 	 */
-	public static void llegirFitxer(){
+	public static void llegirFitxer(TADIndex tad){
 		long ti, tf; // temps per a mesurar l'eficiencia de l'algorisme
 		teclat.nextLine(); //flush
 		String linia;
-		int nLinia=0;
+		int nLinia=0, plana=0;
 		String fitxer = null;
 		boolean correcte = false;
 		while (!correcte)//mentre que quedin dades per llegir
@@ -154,7 +160,7 @@ public class Main {
 					nLinia++; //augmentem el numero de linia
 					System.out.println("Linia: "+nLinia);
 					if(linia.startsWith("<Plana") && linia.endsWith(">")){
-						char plana = linia.charAt(14);//obtenim el numero de plana
+						plana = Integer.parseInt(linia.substring(14, linia.length()-1));//obtenim el numero de plana
 						nLinia=0;//reiniciem el numero de linia
 						System.out.println("Plana: "+plana);
 					}
@@ -166,12 +172,17 @@ public class Main {
 							if (aux.endsWith(",") || aux.endsWith(".")){
 								aux = aux.substring(0, aux.length()-1); //eliminem el punt o coma
 							}
-							//hola a�adir
+							tad.afegir(aux); //afegim la paraula arreglada (sense $ ni '.' o ',') a l'estructura
+							tad.afegirAparicio(paraula, plana, nLinia); //afegim
 							System.out.println("Nova Paraula: "+aux);
 						}
-						//si la paraula ja es troba a l'estructura
-						else{
-							//buscar coincidencia en l'estructura
+						//si la paraula no conte un $ pot ser per dues raons:
+						//no es la primera vegada que apareix
+						//no s'ha d'afegir
+						else{ 
+							if (tad.consultar(paraula)!=null){//si ja esta afegida
+								tad.afegirAparicio(paraula, plana, nLinia);
+							}
 						}
 					}
 				}
