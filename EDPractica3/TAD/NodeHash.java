@@ -1,36 +1,40 @@
 package TAD;
-
-import Tipus.Index;
-
-/**
- * Classe Wrapper per a l'element generic en un NodeHash.
- * Al ser encadenada indirecta necessita contenir un punter al seguent NodeHash
- * @author amt
- *
- * @param <E>
- */
-public class NodeHash<K extends Comparable <K>, E> extends Node{
-	private NodeHash<K, E> ref;
+public class NodeHash<K,V> {
+	private K clau;
+	private V valor;
+	private NodeHash<K,V> seguent;
 	
-	public NodeHash(K k) {
-		super (k);
-		this.ref = null;
+	public NodeHash(K k, NodeHash<K,V> ant) {
+		clau=k;
+		seguent=ant;
 	}
 	
-	public NodeHash(K k, NodeHash<K, E> ref) {
-		super (k);
-		this.ref = ref;
+	public K getClau() {
+		return(clau);
+	}
+	
+	public V getValor() {
+		return(valor);
+	}
+	
+	public NodeHash<K,V> getSeguent() {
+		return(seguent);
 	}
 
-	public NodeHash<K, E> getRef() {
-		return ref;
+	public void setClau(K clau) {
+		this.clau = clau;
 	}
 
-	public void setRef(NodeHash<K, E> ref) {
-		this.ref = ref;
+	public void setValor(V valor) {
+		this.valor = valor;
 	}
 
+	public void setSeguent(NodeHash<K, V> seguent) {
+		this.seguent = seguent;
+	}
+
+	@Override
 	public String toString() {
-		return super.toString()+"NodeHash [ref=" + ref + "]";
+		return "NodeHash [clau=" + clau + ", valor=" + valor + ", seguent=" + seguent + "]";
 	}
 }

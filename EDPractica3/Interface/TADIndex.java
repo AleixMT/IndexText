@@ -15,7 +15,7 @@ public abstract interface TADIndex <K extends Comparable<K>, V>{
 	/**
 	 * Esborra un element de l'index (deixa de fer el seguiment)
 	 */
-	public void esborrar(K k);
+	public boolean esborrar(K k);
 	
 	/**
 	 * Consulta un element (paraula) de l'índex

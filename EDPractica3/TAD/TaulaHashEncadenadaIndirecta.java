@@ -1,12 +1,11 @@
 package TAD;
 
-import java.util.Arrays;
 import Tipus.Index;
 import Interface.TADTaulaHashGenerica;
 
-public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, E> implements TADTaulaHashGenerica<K, E> {
+public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, V> implements TADTaulaHashGenerica<K,V> {
 
-	private NodeHash<K, E>[] taulaElements;
+	private NodeHash<K, V>[] taulaElements;
 	private int capacitatTaula, numElements;
 	// taula per a analitzar el numero de colisions que tenim en cada posicio
 	private int[] numColisions; 
@@ -22,112 +21,132 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, E> implement
 		numColisions=new int[capacitatTaulaHash];
 		maxNumColisions=0;
 	}
-	public void afegir(K k, E e) {
-		int clauHash = 	Math.abs(e.hashCode() % capacitatTaula);
 
-		if (taulaElements[clauHash] == null){//si esta buida
-			taulaElements[clauHash] = new NodeHash<K, E>(k); //creem node
+	public boolean afegir(K k) {
+		int clauHash = 	k.hashCode() % capacitatTaula;
+
+		if (taulaElements[clauHash] == null)
+		{
+			taulaElements[clauHash] = new NodeHash<K, V>(k, null);
 			this.numElements++;
 			// analitzar colisions
 			numColisions[clauHash]++;
-			if (numColisions[clauHash]>maxNumColisions) maxNumColisions=numColisions[clauHash];
-		}
-		else {
-			NodeHash<K, E> nant = taulaElements[clauHash];
-			NodeHash<K, E> n = nant.getRef();
-
-			while (n != null && !nant.getK().equals(k)) {
-				nant = n;
-				n = n.getRef();
+			if (numColisions[clauHash]>maxNumColisions)
+			{
+				maxNumColisions=numColisions[clauHash];
 			}
+			return true;
+		}
+		else 
+		{
+			/*
+			NodeHash<K, V> nant = taulaElements[clauHash];
+			NodeHash<K, V> n = nant.getSeguent();
 
-			if (nant.getK().equals(k))	//substituir
-				nant.setE(e);
-			else {							//inserir
-				NodeHash<K, E> nouNode = new NodeHash<K, E>(k);
-				nant.setRef(nouNode);
+			while (n != null && !nant.getClau().equals(k)) {
+				nant = n;
+				n = n.getSeguent();
+			}
+			*/
+			NodeHash<K, V> n = taulaElements[clauHash];
+
+			while (n != null && !n.getClau().equals(k)) {
+				n = n.getSeguent();
+			}
+			if (n.getClau().equals(k))	
+				return false;	// error paraula ja afegida
+			else 
+			{							//inserir
+				NodeHash<K, V> nouNode = new NodeHash<K, V>(k, null);
+				n.setSeguent(nouNode);
 				this.numElements++;
 				// analitzar colisions
 				numColisions[clauHash]++;
 				if (numColisions[clauHash]>maxNumColisions) maxNumColisions=numColisions[clauHash];
+				return true;
 			}
 		}
 	}
 
-	public void afegirAparicio(K k, int plana, int linia) {
+	public boolean afegirAparicio(K k, int plana, int linia) {
 		int clauHash = k.hashCode() % capacitatTaula; //calculem la posicio de la clau
-		NodeHash<K, E> n = taulaElements[clauHash];
+		NodeHash<K, V> n = taulaElements[clauHash];
 		
-		while (!n.getK().equals(k)){
-			n= n.getRef();//anar al seguent
+		while (!n.getClau().equals(k))
+		{
+			n= n.getSeguent();//anar al seguent
+			if (n==null) return false;
 		}
-		Index index = (Index)(n.getE());
+		Index index = (Index)(n.getValor());
 		index.AfegirAparicio(plana, linia);
+		return true;
 	}
 	
-	public E esborrar(K k) {
+	public boolean esborrar(K k) {
 		int clauHash = k.hashCode() % capacitatTaula;
 
-		NodeHash<K, E> nant = taulaElements[clauHash];
+		NodeHash<K, V> nant = taulaElements[clauHash];
 
-		if (nant != null) {
-			if (nant.getK().equals(k)){
-				taulaElements[clauHash] = nant.getRef();
+		if (nant != null) 
+		{
+			if (nant.getClau().equals(k))
+			{
+				taulaElements[clauHash] = nant.getSeguent();
 				numElements--;
-				return (E) nant.getE();
+				return true;
 			}
-			else {
-
-				NodeHash<K, E> n = nant.getRef();
-				while (n != null && !n.getK().equals(k)) {
+			else 
+			{
+				NodeHash<K, V> n = nant.getSeguent();
+				while (n != null && !n.getClau().equals(k)) 
+				{
 					nant = n;
-					n = n.getRef();
+					n = n.getSeguent();
 				}
-				
-				if (n==null)
-					return null;
-				else{
-					nant.setRef(n.getRef());
+				if (n==null) return false;	// No l'hem trobat
+				else
+				{
+					nant.setSeguent(n.getSeguent());
 					numElements--;
-					return (E) n.getE();
+					return true;
 				}					
 			}			
 		}
-
-		return null;
+		return false;
 	}
 
-	@SuppressWarnings("unchecked")
-	public E consultar(K k) {
+	public V consultar(K k) {
 		int clauHash = k.hashCode() % capacitatTaula;
-		NodeHash<K, E> n = taulaElements[clauHash];
+		NodeHash<K, V> n = taulaElements[clauHash];
 
-		while (n != null && !n.getK().equals(k))
-			n = n.getRef();
+		while (n != null && !n.getClau().equals(k))
+			n = n.getSeguent();
 
-		return (E) ((n != null) ? n.getE() : null);
+		return (n != null) ? n.getValor() : null;
 	}
 
 	public float getFactorDeCarrega() {
 		return (float) numElements / capacitatTaula;
 	}
 
-	public void mostrarTaula() {
+	public String toString() 
+	{
+		String out = "";
 		for (int i = 0; i < this.capacitatTaula; i++) {
-			System.out.print(i + ": ");
+			out+=i + ": ";
 
-			NodeHash<K, E> nant = taulaElements[i];
+			NodeHash<K, V> nant = taulaElements[i];
 
 			while (nant != null) {
-				System.out.print(nant.getK().toString() + "("
-							+ nant.getE().toString() + ") ");
-				nant = nant.getRef();
+				out+= nant.getClau().toString() + "(" + nant.getValor().toString() + ") ";
+				nant = nant.getSeguent();
 			}
 
-			System.out.println("");
+			out+= "\n";
 		}
-		System.out.println("Factor càrrega:"+this.getFactorDeCarrega());
-		System.out.println("");
+		out += "Factor càrrega:"+this.getFactorDeCarrega();
+		out+= "\n";
+		return out;
 	}
 
 	// analitzar colisions
@@ -147,9 +166,5 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, E> implement
 		}
 		System.out.println("El numero de valors diferents que tenim a la taula es de "+totalElements);
 	}
-	@Override
-	public String toString() {
-		return "Index: " + Arrays.toString(taulaElements);
-	}
-	
+		
 }
