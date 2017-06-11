@@ -9,7 +9,6 @@ import java.util.StringTokenizer;
 
 import Interface.TADIndex;
 import TAD.ABCdinamic;
-import TAD.Node;
 import TAD.TaulaHashEncadenadaIndirecta;
 import Tipus.Index;
 
@@ -282,7 +281,7 @@ public class Main {
 				opt=teclat.nextInt();
 				switch(opt) {
 				case 1:
-					System.out.println(tad.toString);
+					System.out.println(tad);
 					break;
 				case 2: 
 					System.out.print("Indica la paraula que vols consultar: ");

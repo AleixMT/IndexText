@@ -1,3 +1,4 @@
+
 package TAD;
 public class NodeHash<K,V> {
 	private K clau;
