@@ -5,9 +5,9 @@ public abstract interface TADIndex <K extends Comparable<K>, V>{
 	 * Afegeix un element del que es fa seguiment a l'index
 	 * @param k
 	 */
-	public boolean afegir(K k);
+	public boolean afegir(K k, V v);	// aquest ha de ser k i v
 	/**
-	 * Afegim una nova aparició de l'element K
+	 * Afegim un nou element k
 	 * @param k
 	 */
 	public boolean afegirAparicio(K k, int plana, int linia);
