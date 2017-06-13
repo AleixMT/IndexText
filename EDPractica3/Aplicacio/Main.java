@@ -58,7 +58,7 @@ public class Main {
 					tad = (TADIndex<String, Index>) new ABCdinamic<String, Index>();
 					break; 
 				case 3: 
-					tad = (TADIndex<String, Index>) new JavaUtil<String, Index>();
+					tad = (TADIndex<String, Index>) new JavaUtil<String, Index>(1000);
 					break;
 				default: System.out.println("Aquesta opcio no esta a la llista. \n");
 				break;	//Funciona com una excepcio per a un valor numeric no acceptat

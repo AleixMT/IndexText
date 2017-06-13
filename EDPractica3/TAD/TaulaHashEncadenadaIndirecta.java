@@ -166,5 +166,9 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, V> implement
 		}
 		System.out.println("El numero de valors diferents que tenim a la taula es de "+totalElements);
 	}
+
+	public boolean existeix(K k) {
+		return false;
+	}
 		
 }

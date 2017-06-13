@@ -1,6 +1,7 @@
 package Interface;
 
 import TAD.LlistaGenericaNoOrd;
+import Interface.TADIndex;
 
 /**
  * Interface per a definir l'arbre binari AVL per a la pràctica 3
@@ -62,7 +63,7 @@ import TAD.LlistaGenericaNoOrd;
  * @author Professors de l'assignatura 16-17
  *
  */
-public abstract interface TAD_ABC<K, V> extends TADIndex<K, V>{
+public abstract interface TAD_ABC<K extends Comparable<K>, V> extends TADIndex<K, V>{
 	
 	public void inserir( K k, V v);
 	
