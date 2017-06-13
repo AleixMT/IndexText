@@ -65,7 +65,7 @@ import Interface.TADIndex;
  */
 public abstract interface TAD_ABC<K extends Comparable<K>, V> extends TADIndex<K, V>{
 	
-	public void inserir( K k, V v);
+	public boolean afegir( K k, V v);
 	
 	public K arrel();
 	
@@ -73,7 +73,7 @@ public abstract interface TAD_ABC<K extends Comparable<K>, V> extends TADIndex<K
 	
 	public boolean existeix( K k);
 	
-	public V buscarElement(K k);
+	public V consultar(K k);
 	
 	public int numNodes();
 	

@@ -7,7 +7,9 @@ package Interface;
  * @author Professors de l'assignatura 16-17
  *
  */
+
 public abstract interface TADTaulaHashGenerica<K extends Comparable<K>,V> extends TADIndex <K, V>{
+
 	/**
 	 * Afegeix un element a la taula de hash
 	 * @param k - clau de l'element a afegir

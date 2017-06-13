@@ -75,7 +75,7 @@ public class Main {
 	/**
 	 * Metode per a consultar les dades de l'estructura
 	 */
-	public static void consultes(TADIndex tad){ //mostra les consultes
+	public static void consultes(TADIndex<String, Index> tad){ //mostra les consultes
 		int opt=0;
 		long ti, tf; // temps per a mesurar l'eficiencia de l'algorisme
 		boolean exit = false;
@@ -135,7 +135,7 @@ public class Main {
 	/**
 	 * Metode per a llegir fitxers i obtenir dades
 	 */
-	public static void llegirFitxer(TADIndex tad){
+	public static void llegirFitxer(TADIndex<String, Index> tad){
 		long ti, tf; // temps per a mesurar l'eficiencia de l'algorisme
 		teclat.nextLine(); //flush
 		String linia;
@@ -178,7 +178,7 @@ public class Main {
 							if (aux.endsWith(",") || aux.endsWith(".")){
 								aux = aux.substring(0, aux.length()-1); //eliminem el punt o coma
 							}
-							tad.afegir(aux); //afegim la paraula arreglada (sense $ ni '.' o ',') a l'estructura
+							tad.afegir(aux, null); //afegim la paraula arreglada (sense $ ni '.' o ',') a l'estructura
 							tad.afegirAparicio(paraula, plana, nLinia); //afegim
 							System.out.println("Nova Paraula: "+aux);
 						}

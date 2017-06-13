@@ -50,26 +50,27 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 		arrel=new NodeABC<K,V>(k,v);
 	}
 	
-	public void inserir(K k, V v) {
+	public boolean afegir(K k, V v) {
 		if (esBuit()) {
 			arrel=new NodeABC<K,V>(k,v);
 		} else {
 			if (arrel.k.equals(k)) arrel.v=v;
 			else if (arrel.k.compareTo(k)>0) {
 				if (arrel.fe!=null)
-					arrel.fe.inserir(k, v);
+					arrel.fe.afegir(k, v);
 				else {
 					arrel.fe=new ABCdinamic<K,V>(k,v);
 				}
 			}
 			else if (arrel.k.compareTo(k)<0) {
 				if (arrel.fd!=null)
-					arrel.fd.inserir(k, v);
+					arrel.fd.afegir(k, v);
 				else {
 					arrel.fd=new ABCdinamic<K,V>(k,v);
 				}
 			}
 		}
+		return true; // cal colocar els booleans
 	}
 
 	public K arrel() {
@@ -79,7 +80,7 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 
 	public boolean afegirAparicio(K k, int plana, int linia){
 		Index i;
-		if ((i = (Index)(buscarElement(k)))!=null)
+		if ((i = (Index)(consultar(k)))!=null)
 		{
 			i.AfegirAparicio(plana, linia);
 			return true;
@@ -123,7 +124,7 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 					if ((arrel.fd!=null) && (arrel.fe!=null)) {
 						// arrel te dos fills
 						K succKlau=arrel.fd.minim();
-						V succValor=buscarElement(succKlau);
+						V succValor=consultar(succKlau);
 						esborrar(succKlau);
 						arrel.k=succKlau;
 						arrel.v=succValor;
@@ -131,6 +132,7 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 				}
 			}
 		}
+		return true; // cal cambiar el restorn i colocarlo be
 	}
 
 	private ABCdinamic<K,V> esborrar(K k, ABCdinamic<K,V> arbre) {
@@ -147,7 +149,7 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 				if ((arbre.arrel.fe!=null) && (arbre.arrel.fd!=null)) {
 					// te dos fills
 					K succKlau=arbre.arrel.fd.minim();
-					V succValor=buscarElement(succKlau);
+					V succValor=consultar(succKlau);
 					esborrar(succKlau);
 					arbre.arrel.k=succKlau;
 					arbre.arrel.v=succValor;
@@ -178,17 +180,17 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 		}
 	}
 
-	public V buscarElement(K k) {
+	public V consultar(K k) {
 		if (arrel==null) return null;
 		else if (arrel.k.equals(k)) return arrel.v;
 		else if (arrel.k.compareTo(k)>0) {
 			if (arrel.fe!=null)
-				return(arrel.fe.buscarElement(k));
+				return(arrel.fe.consultar(k));
 			else return null;
 		}
 		else {
 			if (arrel.fd!=null) 
-				return(arrel.fd.buscarElement(k));
+				return(arrel.fd.consultar(k));
 			else return null;
 		}
 	}
@@ -395,21 +397,6 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 	@Override
 	public String toString() {
 		return "ABCdinamic [arrel=" + arrel + "]";
-	}
-
-	public boolean afegir(K k) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public boolean esborrar(K k) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public V consultar(K k) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	
