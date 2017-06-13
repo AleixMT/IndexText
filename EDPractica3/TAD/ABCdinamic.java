@@ -5,11 +5,16 @@ import Tipus.Index;
 
 public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cloneable {
 	@SuppressWarnings("hiding")
+	
+	
 	private class NodeABC<K extends Comparable<K>, V> implements Cloneable {
 		private K k;
 		private V v;
 		private ABCdinamic<K, V> fe;
 		private ABCdinamic<K, V> fd;
+		private ABCdinamic<K, V> p;
+		private int balance;
+        private int height;
 		
 		public NodeABC(K k, V v) {
 			this.k=k;
@@ -164,7 +169,111 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 		}
 		return arbre;
 	}
-	
+	/* AQUI ESTAN LOS NUEVOS METODOS
+	 * @param n
+	 */
+	private void rebalance(NodeABC<K,V> n) {
+        setBalance(n);
+        if (n.balance == -2) {
+            if (height(n.fe.arrel.fe) >= height(n.fe.arrel.fd))
+                n = rotateRight(n);
+            else
+                n = rotateLeftThenRight(n);
+ 
+        } else if (n.balance == 2) {
+            if (height(n.fd.arrel.fd) >= height(n.fd.arrel.fe))
+                n = rotateLeft(n);
+            else
+                n = rotateRightThenLeft(n);
+        }
+ 
+        if (n.p.arrel != null) {
+            rebalance(n.p.arrel);
+        } else {
+            arrel = n;
+        }
+    }
+ 
+    private NodeABC<K,V> rotateLeft(NodeABC<K,V> a) {
+ 
+        NodeABC<K, V> b = a.fd.arrel;
+        b.p.arrel = a.p.arrel;
+ 
+        a.fd.arrel = b.fe.arrel;
+ 
+        if (a.fd.arrel != null)
+            a.fd.arrel.p.arrel = a;
+ 
+        b.fe.arrel = a;
+        a.p.arrel = b;
+ 
+        if (b.p != null) {
+            if (b.p.arrel.fd.arrel == a) {
+            	b.p.arrel.fd.arrel = b;
+            } else {
+            	b.p.arrel.fe.arrel = b;
+            }
+        }
+ 
+        setBalance(a);
+        setBalance(b);
+
+        return b;
+    }
+ 
+    private NodeABC<K,V> rotateRight(NodeABC<K,V> a) {
+ 
+        NodeABC<K, V> b = a.fe.arrel;
+        b.p.arrel = a.p.arrel;
+ 
+        a.fe.arrel = b.fd.arrel;
+ 
+        if (a.fe.arrel != null)
+            a.fe.arrel.p.arrel = a;
+ 
+        b.fd.arrel = a;
+        a.p.arrel = b;
+ 
+        if (b.p.arrel != null) {
+            if (b.p.arrel.fd.arrel == a) {
+                b.p.arrel.fd.arrel = b;
+            } else {
+                b.p.arrel.fe.arrel = b;
+            }
+        }
+ 
+        setBalance(a);
+        setBalance(b);
+
+        return b;
+    }
+ 
+    private NodeABC<K,V> rotateLeftThenRight(NodeABC<K,V> n) {
+        n.fe.arrel = rotateLeft(n.fe.arrel);
+        return rotateRight(n);
+    }
+ 
+    private NodeABC<K,V> rotateRightThenLeft(NodeABC<K,V> n) {
+        n.fd.arrel = rotateRight(n.fd.arrel);
+        return rotateLeft(n);
+    }
+ 
+    private int height(ABCdinamic<K, V> n) {
+        if (n == null)
+            return -1;
+        return n.arrel.height;
+    }
+ 
+    private void setBalance(NodeABC<K, V> n) {
+            reheight(n);
+			n.balance = height(n.fd) - height(n.fe);
+    }
+    
+    private void reheight(NodeABC<K,V> node){
+        if(node!=null){
+            node.height=1 + Math.max(height(node.fe), height(node.fd));
+        }
+    }
 	public boolean existeix(K k) {
 		if (arrel==null) return false;
 		else if (arrel.k.equals(k)) return true;
