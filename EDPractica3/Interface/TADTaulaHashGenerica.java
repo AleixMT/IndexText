@@ -15,7 +15,7 @@ public abstract interface TADTaulaHashGenerica<K extends Comparable<K>,V> extend
 	 * @param k - clau de l'element a afegir
 	 * @param v - element a afegir
 	 */
-	public boolean afegir(K k);
+	public boolean afegir(K k, V v);
 	
 	/**
 	 * Afegeix una aparicio d'un element a la taula de hash

@@ -6,9 +6,9 @@ public class Index{
 		private Aparicio[] llista;
 		private int pos;
 		
-		public Index(String paraula){
+		public Index(){
 			this.pos = 0;
-		}
+			}
 		
 		/**
 		 * Mètode per afegir una aparició per a la paraula. Rep la la plana i la linia on 

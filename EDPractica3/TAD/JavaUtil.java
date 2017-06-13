@@ -12,8 +12,9 @@ public class JavaUtil <K extends Comparable<K>, V> implements TADIndex<K, V> {
 		this.taula = new Hashtable<K,V>(capacitat);
 	}
 
-	public boolean afegir(K k) {
-		taula.put(k, null); //afegim la clau, sense valors
+	@SuppressWarnings("unchecked")
+	public boolean afegir(K k, V v) {
+		taula.put(k, (V) new Index()); //afegim la clau, sense valors
 		return true;
 	}
 

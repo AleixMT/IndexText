@@ -35,12 +35,7 @@ public class Main {
 	public static TADIndex<String, Index> menu(){ //mostra el menu i inicialitza el TAD
 		int opt=0;
 		TADIndex<String, Index> tad = null;
-		long ti, tf; // temps per a mesurar l'eficiencia de l'algorisme
 		//teclat.nextLine(); //flush
-		String linia;
-		int nLinia=0, plana=0;
-		String fitxer = null;
-		boolean correcte = false;
 		while (tad==null) //iterarem mentre que el usuari no indiqui l'estructura
 		{
 			System.out.println("Quina versio vols utilitzar?");

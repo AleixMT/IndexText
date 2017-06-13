@@ -1,7 +1,7 @@
 package TAD;
 
-import Tipus.Index;
 import Interface.TADTaulaHashGenerica;
+import Tipus.Index;
 
 public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, V> implements TADTaulaHashGenerica<K,V> {
 
@@ -22,7 +22,7 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, V> implement
 		maxNumColisions=0;
 	}
 
-	public boolean afegir(K k) {
+	public boolean afegir(K k, V v) {
 		int clauHash = 	k.hashCode() % capacitatTaula;
 
 		if (taulaElements[clauHash] == null)
@@ -144,7 +144,7 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, V> implement
 
 			out+= "\n";
 		}
-		out += "Factor càrrega:"+this.getFactorDeCarrega();
+		out += "Factor cï¿½rrega:"+this.getFactorDeCarrega();
 		out+= "\n";
 		return out;
 	}
