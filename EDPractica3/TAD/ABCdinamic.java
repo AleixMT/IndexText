@@ -389,5 +389,20 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 		return "ABCdinamic [arrel=" + arrel + "]";
 	}
 
+	public boolean afegir(K k) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean esborrar(K k) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public V consultar(K k) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

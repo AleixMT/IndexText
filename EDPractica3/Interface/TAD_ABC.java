@@ -62,13 +62,13 @@ import TAD.LlistaGenericaNoOrd;
  * @author Professors de l'assignatura 16-17
  *
  */
-public interface TAD_ABC<K, V> {
+public abstract interface TAD_ABC<K, V> extends TADIndex<K, V>{
 	
 	public void inserir( K k, V v);
 	
 	public K arrel();
 	
-	public void esborrar( K k);
+	public boolean esborrar( K k);
 	
 	public boolean existeix( K k);
 	
