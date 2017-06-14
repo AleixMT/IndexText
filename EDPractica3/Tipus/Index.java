@@ -7,7 +7,8 @@ public class Index{
 		private int pos;
 		
 		public Index(){
-			this.pos = 0;
+			this.pos = -1;
+			this.llista = new Aparicio[1000];
 			}
 		
 		/**
@@ -19,12 +20,21 @@ public class Index{
 		 * @return
 		 */
 		public boolean AfegirAparicio(int plana, int linia){
-			if (this.llista[pos].equals(plana, linia)) return false;	
-			else
+			if (pos == -1)
 			{
-				this.pos++;
+				pos++;
 				this.llista[pos] = new Aparicio (plana, linia);
 				return true;
+			}
+			else
+			{
+				if (this.llista[pos].equals(plana, linia)) return false;	
+				else
+				{
+					this.pos++;
+					this.llista[pos] = new Aparicio (plana, linia);
+					return true;
+				}
 			}
 		}
 
@@ -49,6 +59,7 @@ public class Index{
 			return "Index [llista=" + Arrays.toString(llista) + ", pos=" + pos
 					+ "]";
 		}
+		
 		
 		
 

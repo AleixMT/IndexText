@@ -159,23 +159,24 @@ public class Main {
 				{
 					StringTokenizer stringToken = new StringTokenizer(linia, " ");
 					nLinia++; //augmentem el numero de linia
-					System.out.println("Linia: "+nLinia);
+					//System.out.println("Linia: "+nLinia);
 					if(linia.startsWith("<Plana") && linia.endsWith(">")){
 						plana = Integer.parseInt(linia.substring(14, linia.length()-1));//obtenim el numero de plana
 						nLinia=0;//reiniciem el numero de linia
-						System.out.println("Plana: "+plana);
+						//System.out.println("Plana: "+plana);
 					}
 					while (stringToken.hasMoreElements()){
 						//llegim paraula a paraula i ho posem a un string
 						String paraula = stringToken.nextElement().toString();
-						if(paraula.startsWith("$")){ //es la primera vegada que es troba aquesta paraula, s'ha de guardar a l'estructura
-							String aux = paraula.substring(1, paraula.length());
-							if (aux.endsWith(",") || aux.endsWith(".")){
+						if(paraula.startsWith("$"))
+						{ //es la primera vegada que es troba aquesta paraula, s'ha de guardar a l'estructura
+							String aux = paraula.substring(1, paraula.length()); //eliminem el $
+							if (aux.endsWith(",") || aux.endsWith(".") || aux.endsWith(";")){
 								aux = aux.substring(0, aux.length()-1); //eliminem el punt o coma
 							}
 							tad.afegir(aux, null); //afegim la paraula arreglada (sense $ ni '.' o ',') a l'estructura
-							tad.afegirAparicio(paraula, plana, nLinia); //afegim
-							System.out.println("Nova Paraula: "+aux);
+							tad.afegirAparicio(aux, plana, nLinia); //afegim
+							//System.out.println("Nova Paraula: "+aux);
 						}
 						//si la paraula no conte un $ pot ser per dues raons:
 						//no es la primera vegada que apareix

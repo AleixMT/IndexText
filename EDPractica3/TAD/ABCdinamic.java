@@ -16,11 +16,21 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 		private int balance;
         private int height;
 		
+		@SuppressWarnings("unchecked")
 		public NodeABC(K k, V v) {
 			this.k=k;
-			this.v=v;
+			this.v = (V) new Index();
 			fe=null;
 			fd=null;
+		}
+		
+		@SuppressWarnings("unchecked")
+		public NodeABC(K k, V v, ABCdinamic<K,V> p) {
+			this.k=k;
+			this.v = (V) new Index();
+			fe=null;
+			fd=null;
+			this.p = p;
 		}
 
 		@Override
@@ -55,24 +65,36 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 		arrel=new NodeABC<K,V>(k,v);
 	}
 	
+	public ABCdinamic(K k, V v, ABCdinamic<K,V> p) {
+		arrel=new NodeABC<K,V>(k,v, p);
+	}
 	public boolean afegir(K k, V v) {
-		if (esBuit()) {
+		if (esBuit()) 
+		{
 			arrel=new NodeABC<K,V>(k,v);
-		} else {
-			if (arrel.k.equals(k)) arrel.v=v;
+		} 
+		else 
+		{
+			if (arrel.k.equals(k)) return false;
 			else if (arrel.k.compareTo(k)>0) {
-				if (arrel.fe!=null)
-					arrel.fe.afegir(k, v);
-				else {
-					arrel.fe=new ABCdinamic<K,V>(k,v);
+				if (arrel.fe!=null) arrel.fe.afegir(k, v);	
+				else 
+				{
+					arrel.fe=new ABCdinamic<K,V>(k,v, this);
 				}
 			}
-			else if (arrel.k.compareTo(k)<0) {
-				if (arrel.fd!=null)
-					arrel.fd.afegir(k, v);
-				else {
-					arrel.fd=new ABCdinamic<K,V>(k,v);
+			else if (arrel.k.compareTo(k)<0) 
+			{
+				if (arrel.fd!=null) arrel.fd.afegir(k, v);
+				else 
+				{
+					arrel.fd=new ABCdinamic<K,V>(k,v, this);
 				}
+			}
+			NodeABC<K,V> aux=arrel;
+			while (aux.p != null){//equilibrem l'arbre sencer
+				rebalance(aux); 
+				aux = aux.p.arrel;
 			}
 		}
 		return true; // cal colocar els booleans
@@ -84,13 +106,9 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 	}
 
 	public boolean afegirAparicio(K k, int plana, int linia){
-		Index i;
-		if ((i = (Index)(consultar(k)))!=null)
-		{
-			i.AfegirAparicio(plana, linia);
-			return true;
-		}
-		return false;
+		Index i = (Index)(consultar(k));
+		i.AfegirAparicio(plana, linia);
+		return true;
 	}
 	
 	public boolean esborrar(K k) {
@@ -98,12 +116,14 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 			if (arrel.k.compareTo(k)>0) {
 				if (arrel.fe!=null){
 					arrel.fe=esborrar(k, arrel.fe);
+					rebalance(arrel.p.arrel);
 					return true;
 				}		
 			}
 			else if (arrel.k.compareTo(k)<0) {
 				if (arrel.fd!=null){
 					arrel.fd=esborrar(k, arrel.fd);
+					rebalance(arrel.p.arrel);
 					return true;
 				}
 					
@@ -120,11 +140,14 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 					if ((arrel.fd==null) && (arrel.fe!=null)) {
 						//l'arrel te el fe
 						arrel=arrel.fe.arrel;
+						rebalance(arrel.p.arrel);
 						return true;
 					}
 					if ((arrel.fd!=null) && (arrel.fe==null)) {
 						//l'arrel te el fd
 						arrel=arrel.fd.arrel;
+						rebalance(arrel.p.arrel);
+						return true;
 					}
 					if ((arrel.fd!=null) && (arrel.fe!=null)) {
 						// arrel te dos fills
@@ -143,12 +166,16 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 	private ABCdinamic<K,V> esborrar(K k, ABCdinamic<K,V> arbre) {
 		if (arbre!=null) {
 			if (arbre.arrel.k.compareTo(k)>0) {
-				if (arbre.arrel.fe!=null)
+				if (arbre.arrel.fe!=null){
 					arbre.arrel.fe=esborrar(k, arbre.arrel.fe);
+					rebalance(arrel.p.arrel);
+				}
 			}
 			if (arbre.arrel.k.compareTo(k)<0) {
-				if (arbre.arrel.fd!=null)
+				if (arbre.arrel.fd!=null){
 					arbre.arrel.fd=esborrar(k, arbre.arrel.fd);
+					rebalance(arrel.p.arrel);
+				}
 			}
 			if (arbre.arrel.k.compareTo(k)==0) {
 				if ((arbre.arrel.fe!=null) && (arbre.arrel.fd!=null)) {
@@ -156,6 +183,7 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 					K succKlau=arbre.arrel.fd.minim();
 					V succValor=consultar(succKlau);
 					esborrar(succKlau);
+					rebalance(arrel.p.arrel);
 					arbre.arrel.k=succKlau;
 					arbre.arrel.v=succValor;
 					
@@ -169,9 +197,20 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 		}
 		return arbre;
 	}
-	/* AQUI ESTAN LOS NUEVOS METODOS
-	 * @param n
-	 */
+	
+	public V consultar(K k) {
+		if (arrel==null) return null;
+		else if (arrel.k.equals(k)) return arrel.v;
+		else if (arrel.k.compareTo(k)>0) {
+			if (arrel.fe!=null) return(arrel.fe.consultar(k));
+			else return null;
+		}
+		else {
+			if (arrel.fd!=null) return(arrel.fd.consultar(k));
+			else return null;
+		}
+	}
+
 	private void rebalance(NodeABC<K,V> n) {
         setBalance(n);
         if (n.balance == -2) {
@@ -286,21 +325,6 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 			if (arrel.fd!=null)
 				return(arrel.fd.existeix(k));
 			else return(false);
-		}
-	}
-
-	public V consultar(K k) {
-		if (arrel==null) return null;
-		else if (arrel.k.equals(k)) return arrel.v;
-		else if (arrel.k.compareTo(k)>0) {
-			if (arrel.fe!=null)
-				return(arrel.fe.consultar(k));
-			else return null;
-		}
-		else {
-			if (arrel.fd!=null) 
-				return(arrel.fd.consultar(k));
-			else return null;
 		}
 	}
 
