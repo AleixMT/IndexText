@@ -112,7 +112,8 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 	}
 	
 	public boolean esborrar(K k) {
-		if (arrel!=null) {
+		if (arrel!=null) 
+		{
 			if (arrel.k.compareTo(k)>0) {
 				if (arrel.fe!=null){
 					arrel.fe=esborrar(k, arrel.fe);
@@ -120,8 +121,10 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 					return true;
 				}		
 			}
-			else if (arrel.k.compareTo(k)<0) {
-				if (arrel.fd!=null){
+			else if (arrel.k.compareTo(k)<0) 
+			{
+				if (arrel.fd!=null)
+				{
 					arrel.fd=esborrar(k, arrel.fd);
 					rebalance(arrel.p.arrel);
 					return true;
