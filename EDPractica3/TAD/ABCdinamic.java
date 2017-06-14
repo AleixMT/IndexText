@@ -238,7 +238,7 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
  
     private NodeABC<K,V> rotateLeft(NodeABC<K,V> a) {
  
-        NodeABC<K, V> b = a.fd.arrel;
+    	NodeABC<K, V> b = a.fd.arrel;
         b.p.arrel = a.p.arrel;
  
         a.fd.arrel = b.fe.arrel;

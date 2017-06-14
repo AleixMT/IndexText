@@ -23,7 +23,7 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, V> implement
 	}
 
 	public boolean afegir(K k, V v) {
-		int clauHash = 	k.hashCode() % capacitatTaula;
+		int clauHash = 	Math.abs(k.hashCode() % capacitatTaula);
 
 		if (taulaElements[clauHash] == null)
 		{
@@ -69,7 +69,7 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, V> implement
 	}
 
 	public boolean afegirAparicio(K k, int plana, int linia) {
-		int clauHash = k.hashCode() % capacitatTaula; //calculem la posicio de la clau
+		int clauHash = Math.abs(k.hashCode() % capacitatTaula); //calculem la posicio de la clau
 		NodeHash<K, V> n = taulaElements[clauHash];
 		
 		while (!n.getClau().equals(k))
@@ -116,7 +116,7 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, V> implement
 	}
 
 	public V consultar(K k) {
-		int clauHash = k.hashCode() % capacitatTaula;
+		int clauHash = Math.abs(k.hashCode() % capacitatTaula);
 		NodeHash<K, V> n = taulaElements[clauHash];
 
 		while (n != null && !n.getClau().equals(k))

@@ -1,12 +1,17 @@
 
 package TAD;
+
+import Tipus.Index;
+
 public class NodeHash<K,V> {
 	private K clau;
 	private V valor;
 	private NodeHash<K,V> seguent;
 	
+	@SuppressWarnings("unchecked")
 	public NodeHash(K k, NodeHash<K,V> ant) {
 		clau=k;
+		this.valor = (V) new Index();
 		seguent=ant;
 	}
 	
