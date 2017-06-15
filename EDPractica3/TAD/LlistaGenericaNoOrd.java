@@ -57,6 +57,7 @@ public class LlistaGenericaNoOrd<T> implements Iterable<T> {
 		return pI;
 	}
 
+
 	
 	
 }

@@ -12,9 +12,9 @@ public class Index{
 			}
 		
 		/**
-		 * Mètode per afegir una aparició per a la paraula. Rep la la plana i la linia on 
-		 * ha hagut l'aparició. Retorna true si s'ha afegit una aparició. Retorna false si s'ha 
-		 * registrat una aparició en aquella mateixa linia i per tant no s'afegeix res.
+		 * Metode per afegir una aparicio per a la paraula. Rep la la plana i la linia on 
+		 * ha hagut l'aparicio. Retorna true si s'ha afegit una aparicio. Retorna false si s'ha 
+		 * registrat una aparicio en aquella mateixa linia i per tant no s'afegeix res.
 		 * @param plana
 		 * @param linia
 		 * @return
@@ -56,8 +56,11 @@ public class Index{
 
 		@Override
 		public String toString() {
-			return "Index [llista=" + Arrays.toString(llista) + ", pos=" + pos
-					+ "]";
+			String out = "";
+			for (int i=-1; i<pos; i++){
+				out+=llista[pos];
+			}
+			return out;
 		}
 		
 		

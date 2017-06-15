@@ -29,7 +29,7 @@ public class Aparicio {
 	}
 	
 	public String toString() {
-		return "Aparicions [plana=" + plana + ", linia=" + linia + "]";
+		return plana + ":" + linia+" ";
 	}
 	
 }

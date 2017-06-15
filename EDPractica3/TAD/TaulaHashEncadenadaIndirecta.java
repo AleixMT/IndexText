@@ -1,5 +1,7 @@
 package TAD;
 
+import java.util.Iterator;
+
 import Interface.TADTaulaHashGenerica;
 import Tipus.Index;
 
@@ -20,6 +22,47 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, V> implement
 		// analitzar colisions
 		numColisions=new int[capacitatTaulaHash];
 		maxNumColisions=0;
+	}
+	
+
+	public NodeHash<K, V>[] getTaulaElements() {
+		return taulaElements;
+	}
+
+	public void setTaulaElements(NodeHash<K, V>[] taulaElements) {
+		this.taulaElements = taulaElements;
+	}
+
+	public int getCapacitatTaula() {
+		return capacitatTaula;
+	}
+
+	public void setCapacitatTaula(int capacitatTaula) {
+		this.capacitatTaula = capacitatTaula;
+	}
+
+	public int getNumElements() {
+		return numElements;
+	}
+
+	public void setNumElements(int numElements) {
+		this.numElements = numElements;
+	}
+
+	public int[] getNumColisions() {
+		return numColisions;
+	}
+
+	public void setNumColisions(int[] numColisions) {
+		this.numColisions = numColisions;
+	}
+
+	public int getMaxNumColisions() {
+		return maxNumColisions;
+	}
+
+	public void setMaxNumColisions(int maxNumColisions) {
+		this.maxNumColisions = maxNumColisions;
 	}
 
 	public boolean afegir(K k, V v) {
@@ -131,21 +174,16 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, V> implement
 
 	public String toString() 
 	{
-		String out = "";
-		for (int i = 0; i < this.capacitatTaula; i++) {
-			out+=i + ": ";
-
-			NodeHash<K, V> nant = taulaElements[i];
-
-			while (nant != null) {
-				out+= nant.getClau().toString() + "(" + nant.getValor().toString() + ") ";
-				nant = nant.getSeguent();
+		MeuIterator<NodeHash<K,V>> it = new MeuIterator<NodeHash<K,V>>(this);
+		NodeHash<K,V> aux;
+		String out= "";
+		while (it.hasNext()){
+			aux=it.next();
+			if (aux!=null){
+				out+= aux.getClau() + " ";
+				if(aux.getValor()!=null) out+=aux.getValor() +"\n";
 			}
-
-			out+= "\n";
 		}
-		out += "Factor c�rrega:"+this.getFactorDeCarrega();
-		out+= "\n";
 		return out;
 	}
 

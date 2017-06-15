@@ -89,7 +89,7 @@ public class Main {
 				opt=teclat.nextInt();
 				switch(opt) {
 				case 1:
-					System.out.println(tad);
+					System.out.println(tad.toString());
 					break;
 				case 2: 
 					System.out.print("Indica la paraula que vols consultar: ");
