@@ -182,7 +182,8 @@ public class Main {
 						//no es la primera vegada que apareix
 						//no s'ha d'afegir
 						else{ 
-							if (tad.consultar(paraula)!=null){//si ja esta afegida
+							if (tad.consultar(paraula)!=null)
+							{//si ja esta afegida
 								tad.afegirAparicio(paraula, plana, nLinia);
 							}
 						}

@@ -68,24 +68,27 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 		arrel=new NodeABC<K,V>(k,v, p);
 	}
 	
+	public ABCdinamic(NodeABC<K,V> n) {
+		arrel = n;
+	}
 	/**
 	 * Reequilibra un node rebut per peràmetre
 	 * @param n
 	 */
 	private void rebalance(NodeABC<K,V> n) {
         setBalance(n);	/** Recalculem el factor d'equilibri de l'arbre**/
-        if (n.balance == 2) /** Si el factor d'equilibri és 2 dos, vol dir que tenim més nodes a a la esquerra**/
+        if (n.balance == -2) /** Si el factor d'equilibri és 2 dos, vol dir que tenim més nodes a a la esquerra**/
         { /** Si l'altura fe del fe és més gran que el fd del fe llavors fem rotació simple a la dreta **/
         	if (height(n.fe.arrel.fe) >= height(n.fe.arrel.fd)) n = rotateRight(n);		 
             else n = rotateLeftThenRight(n); /** Sinó vol dir que l'arbre necessita doble rotació esquerra i després dreta **/
         } 
-        else if (n.balance == -2) 
+        else if (n.balance == 2) 
         { /** Si l'altura fd del fd és més gran que el fe del fd llavors fem rotació simple a l'esquerre **/
             if (height(n.fd.arrel.fd) >= height(n.fd.arrel.fe)) n = rotateLeft(n);
             else n = rotateRightThenLeft(n); /** Sinó vol dir que l'arbre necessita doble rotació dreta i després esquerra **/
         }
         if (n.p != null) rebalance(n.p.arrel);	/** Si tenim un arbre pare, llavors balancegem el node arrel del pare **/
-        else arrel = n;		/** fem un set del nou arbre equilibrat **/
+       // else arrel = n;		/** fem un set del nou arbre equilibrat **/
     }
  
 	/**
@@ -110,7 +113,7 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 				}
 			}
 			else if (arrel.k.compareTo(k)<0) 	
-			{ /** Arbre esquerra **/
+			{ /** Arbre dret **/
 				if (arrel.fd!=null) arrel.fd.afegir(k, v); /** Si el fill esquerra està buit, executem afegir sobre ell **/
 				else 
 				{
@@ -122,61 +125,60 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 		return true; /** Hem afegit, per tant retornem cert **/
 	}
 
-	
+	/**
+	 * Métode que efectua una rotació simple a l'esquerra sobre el node passat per paràmetre i recalcula els factors equilibri 
+	 * del node retornat
+	 * @param a Node al que se li fa la rotació
+	 * @return Node equilibrat
+	 */
     private NodeABC<K,V> rotateLeft(NodeABC<K,V> a) {
+    	ABCdinamic<K,V> B = a.fd; /** Creem un arbre auxiliar que sigui el subarbre dret de l'arbre que s'ha d'equilibrar **/
+    	ABCdinamic<K,V> A = new ABCdinamic<K,V>(a); /** Creem un arbre auxiliar que sigui l'arbre a equilibrar **/
+    	B.arrel.p = A.arrel.p; /** Fem que el fill dret ara apunti al pare de a (fem la primera colocació de punters) **/
+        A.arrel.fd = B.arrel.fe;	/** Ara el fill dret de a, apuntarà al subarbre que tenia b a la seva esquerra **/
+        if (A.arrel.fd != null) A.arrel.fd.arrel.p = A;	/** Si el fill dret de a no és buit llavors fem que el fill dret apunti a A com a pare **/
+        B.arrel.fe = A;		/** Fem que el fill esquerre de b apunti al subarbre a **/
+        A.arrel.p = B;				/** Fem que el pare de a apunti a b **/
  
-    	NodeABC<K, V> b = a.fd.arrel;
-        b.p.arrel = a.p.arrel;
- 
-        a.fd.arrel = b.fe.arrel;
- 
-        if (a.fd.arrel != null)
-            a.fd.arrel.p.arrel = a;
- 
-        b.fe.arrel = a;
-        a.p.arrel = b;
- 
-        if (b.p != null) {
-            if (b.p.arrel.fd.arrel == a) {
-            	b.p.arrel.fd.arrel = b;
-            } else {
-            	b.p.arrel.fe.arrel = b;
-            }
+        if (B.arrel.p != null) {
+            if (B.arrel.p.arrel.fd.arrel.k.equals(a.k)) B.arrel.p.arrel.fd = B;	/** Si fill dret del pare de A era A, llavors hem de conectar els punters a la dreta **/
+            else B.arrel.p.arrel.fe = B; /** Sinó a l'esquerra **/
         }
- 
-        setBalance(a);
-        setBalance(b);
-
-        return b;
+        setBalance(A.arrel);	/** Recalculem els factors d'equilibri **/
+        setBalance(B.arrel);
+        return B.arrel;	/** Retornem el node ja equilibrat **/
     }
  
+	/**
+	 * Métode que efectua una rotació simple a la dreta sobre el node passat per paràmetre i recalcula els factors equilibri 
+	 * del node retornat
+	 * @param a Node al que se li fa la rotació
+	 * @return Node equilibrat
+	 */
     private NodeABC<K,V> rotateRight(NodeABC<K,V> a) {
- 
-        NodeABC<K, V> b = a.fe.arrel;
-        b.p.arrel = a.p.arrel;
- 
-        a.fe.arrel = b.fd.arrel;
- 
-        if (a.fe.arrel != null)
-            a.fe.arrel.p.arrel = a;
- 
-        b.fd.arrel = a;
-        a.p.arrel = b;
- 
-        if (b.p.arrel != null) {
-            if (b.p.arrel.fd.arrel == a) {
-                b.p.arrel.fd.arrel = b;
-            } else {
-                b.p.arrel.fe.arrel = b;
-            }
+    	ABCdinamic<K,V> B = a.fe; /** Creem un arbre auxiliar que sigui el subarbre esquerra de l'arbre que s'ha d'equilibrar **/
+    	ABCdinamic<K,V> A = new ABCdinamic<K,V>(a); /** Creem un arbre auxiliar que sigui l'arbre a equilibrar **/
+    	B.arrel.p = A.arrel.p; /** Fem que el fill dret ara apunti al pare de a (fem la primera colocació de punters) **/
+        A.arrel.fe = B.arrel.fd;	/** Ara el fill esquerra de a, apuntarà al subarbre que tenia b a la seva dreta **/ 
+        if (A.arrel.fe != null) A.arrel.fe.arrel.p = A; /** Si el fill dret de a no és buit llavors fem que el fill dret apunti a A com a pare **/
+        B.arrel.fd = A; /** Fem que el fill esquerre de b apunti al subarbre a **/
+        A.arrel.p = B; /** Fem que el pare de a apunti a b **/
+        		
+        if (B.arrel.p != null) 
+        {
+        	if (B.arrel.p.arrel.fd.arrel.k.equals(a.k)) B.arrel.p.arrel.fd = B;	/** Si fill dret del pare de A era A, llavors hem de conectar els punters a la dreta **/
+        	else B.arrel.p.arrel.fe = B; /** Sinó a l'esquerra **/
         }
- 
-        setBalance(a);
-        setBalance(b);
-
-        return b;
+        setBalance(A.arrel);	/** Recalculem els factors d'equilibri **/
+        setBalance(B.arrel);
+        return B.arrel;	/** Retornem el node ja equilibrat **/
     }
- 
+    
+    /**
+     * Aplica una rotació a la esquerra al 
+     * @param n
+     * @return
+     */
     private NodeABC<K,V> rotateLeftThenRight(NodeABC<K,V> n) {
         n.fe.arrel = rotateLeft(n.fe.arrel);
         return rotateRight(n);
@@ -212,8 +214,13 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 	 * Métode que afegeix una aparició a l'element V. Crida el métode d'afegir aparició sobre l'element consultat
 	 */
 	public boolean afegirAparicio(K k, int plana, int linia){
-		((Index)(consultar(k))).AfegirAparicio(plana, linia);
-		return true;
+		V v = consultar(k);	/** Creem un auxiliar per al consultar **/
+		if (v != null)	/** si no està buit **/
+		{
+			((Index)v).AfegirAparicio(plana, linia);	/** Fem el cast i afegim aparició sobre ell **/
+			return true;	/** Retornem cert **/
+		}
+		else return false;	/** Vol dir que l'element era null, per tant no hem afegit res **/
 	}
 	
 	public boolean esborrar(K k) {
