@@ -68,46 +68,153 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 	public ABCdinamic(K k, V v, ABCdinamic<K,V> p) {
 		arrel=new NodeABC<K,V>(k,v, p);
 	}
+	private void rebalance(NodeABC<K,V> n) {
+        setBalance(n);
+        if (n.balance == -2) {
+            if (height(n.fe.arrel.fe) >= height(n.fe.arrel.fd))
+                n = rotateRight(n);
+            else
+                n = rotateLeftThenRight(n);
+ 
+        } else if (n.balance == 2) {
+            if (height(n.fd.arrel.fd) >= height(n.fd.arrel.fe))
+                n = rotateLeft(n);
+            else
+                n = rotateRightThenLeft(n);
+        }
+ 
+        if (n.p.arrel != null) {
+            rebalance(n.p.arrel);
+        } else {
+            arrel = n;
+        }
+    }
+ 
+	/**
+	 * Mètode que retorna true si afegeix un nou element de manera ordenada a l'arbre AVL i reequilibra tots 
+	 * els nodes per a arribar a l'arrel. Si hi ha un amb el mateix identificador retorna false.  
+	 */
 	public boolean afegir(K k, V v) {
-		if (esBuit()) 
+		if (esBuit())	// Si és buit creem el node a l'arrel
 		{
 			arrel=new NodeABC<K,V>(k,v);
 		} 
 		else 
 		{
-			if (arrel.k.equals(k)) return false;
-			else if (arrel.k.compareTo(k)>0) {
+			if (arrel.k.equals(k)) return false;	// Si ja s'ha afegit retorna fal
+			else if (arrel.k.compareTo(k)>0) {	// Arbre esquerra
 				if (arrel.fe!=null) arrel.fe.afegir(k, v);	
 				else 
 				{
 					arrel.fe=new ABCdinamic<K,V>(k,v, this);
+					rebalance(this.arrel); 
+
 				}
 			}
-			else if (arrel.k.compareTo(k)<0) 
+			else if (arrel.k.compareTo(k)<0) 	// arbre dret
 			{
 				if (arrel.fd!=null) arrel.fd.afegir(k, v);
 				else 
 				{
 					arrel.fd=new ABCdinamic<K,V>(k,v, this);
+					rebalance(this.arrel); 
 				}
 			}
-			NodeABC<K,V> aux=arrel;
-			while (aux.p != null){//equilibrem l'arbre sencer
-				rebalance(aux); 
-				aux = aux.p.arrel;
-			}
 		}
-		return true; // cal colocar els booleans
+		return true; 
 	}
 
+	
+    private NodeABC<K,V> rotateLeft(NodeABC<K,V> a) {
+ 
+    	NodeABC<K, V> b = a.fd.arrel;
+        b.p.arrel = a.p.arrel;
+ 
+        a.fd.arrel = b.fe.arrel;
+ 
+        if (a.fd.arrel != null)
+            a.fd.arrel.p.arrel = a;
+ 
+        b.fe.arrel = a;
+        a.p.arrel = b;
+ 
+        if (b.p != null) {
+            if (b.p.arrel.fd.arrel == a) {
+            	b.p.arrel.fd.arrel = b;
+            } else {
+            	b.p.arrel.fe.arrel = b;
+            }
+        }
+ 
+        setBalance(a);
+        setBalance(b);
+
+        return b;
+    }
+ 
+    private NodeABC<K,V> rotateRight(NodeABC<K,V> a) {
+ 
+        NodeABC<K, V> b = a.fe.arrel;
+        b.p.arrel = a.p.arrel;
+ 
+        a.fe.arrel = b.fd.arrel;
+ 
+        if (a.fe.arrel != null)
+            a.fe.arrel.p.arrel = a;
+ 
+        b.fd.arrel = a;
+        a.p.arrel = b;
+ 
+        if (b.p.arrel != null) {
+            if (b.p.arrel.fd.arrel == a) {
+                b.p.arrel.fd.arrel = b;
+            } else {
+                b.p.arrel.fe.arrel = b;
+            }
+        }
+ 
+        setBalance(a);
+        setBalance(b);
+
+        return b;
+    }
+ 
+    private NodeABC<K,V> rotateLeftThenRight(NodeABC<K,V> n) {
+        n.fe.arrel = rotateLeft(n.fe.arrel);
+        return rotateRight(n);
+    }
+ 
+    private NodeABC<K,V> rotateRightThenLeft(NodeABC<K,V> n) {
+        n.fd.arrel = rotateRight(n.fd.arrel);
+        return rotateLeft(n);
+    }
+ 
+    private int height(ABCdinamic<K, V> n) {
+        if (n == null)
+            return -1;
+        return n.arrel.height;
+    }
+ 
+    private void setBalance(NodeABC<K, V> n) {
+            reheight(n);
+			n.balance = height(n.fd) - height(n.fe);
+    }
+    
+    private void reheight(NodeABC<K,V> node){
+        if(node!=null){
+            node.height=1 + Math.max(height(node.fe), height(node.fd));
+        }
+    }
 	public K arrel() {
 		if (arrel!=null) return (arrel.k);
 		return null;
 	}
-
+	
+	/**
+	 * Métode que afegeix una aparició a l'element V. Crida el métode d'afegir aparició sobre l'element consultat
+	 */
 	public boolean afegirAparicio(K k, int plana, int linia){
-		Index i = (Index)(consultar(k));
-		i.AfegirAparicio(plana, linia);
+		((Index)(consultar(k))).AfegirAparicio(plana, linia);
 		return true;
 	}
 	
@@ -214,108 +321,7 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 		}
 	}
 
-	private void rebalance(NodeABC<K,V> n) {
-        setBalance(n);
-        if (n.balance == -2) {
-            if (height(n.fe.arrel.fe) >= height(n.fe.arrel.fd))
-                n = rotateRight(n);
-            else
-                n = rotateLeftThenRight(n);
- 
-        } else if (n.balance == 2) {
-            if (height(n.fd.arrel.fd) >= height(n.fd.arrel.fe))
-                n = rotateLeft(n);
-            else
-                n = rotateRightThenLeft(n);
-        }
- 
-        if (n.p.arrel != null) {
-            rebalance(n.p.arrel);
-        } else {
-            arrel = n;
-        }
-    }
- 
-    private NodeABC<K,V> rotateLeft(NodeABC<K,V> a) {
- 
-    	NodeABC<K, V> b = a.fd.arrel;
-        b.p.arrel = a.p.arrel;
- 
-        a.fd.arrel = b.fe.arrel;
- 
-        if (a.fd.arrel != null)
-            a.fd.arrel.p.arrel = a;
- 
-        b.fe.arrel = a;
-        a.p.arrel = b;
- 
-        if (b.p != null) {
-            if (b.p.arrel.fd.arrel == a) {
-            	b.p.arrel.fd.arrel = b;
-            } else {
-            	b.p.arrel.fe.arrel = b;
-            }
-        }
- 
-        setBalance(a);
-        setBalance(b);
 
-        return b;
-    }
- 
-    private NodeABC<K,V> rotateRight(NodeABC<K,V> a) {
- 
-        NodeABC<K, V> b = a.fe.arrel;
-        b.p.arrel = a.p.arrel;
- 
-        a.fe.arrel = b.fd.arrel;
- 
-        if (a.fe.arrel != null)
-            a.fe.arrel.p.arrel = a;
- 
-        b.fd.arrel = a;
-        a.p.arrel = b;
- 
-        if (b.p.arrel != null) {
-            if (b.p.arrel.fd.arrel == a) {
-                b.p.arrel.fd.arrel = b;
-            } else {
-                b.p.arrel.fe.arrel = b;
-            }
-        }
- 
-        setBalance(a);
-        setBalance(b);
-
-        return b;
-    }
- 
-    private NodeABC<K,V> rotateLeftThenRight(NodeABC<K,V> n) {
-        n.fe.arrel = rotateLeft(n.fe.arrel);
-        return rotateRight(n);
-    }
- 
-    private NodeABC<K,V> rotateRightThenLeft(NodeABC<K,V> n) {
-        n.fd.arrel = rotateRight(n.fd.arrel);
-        return rotateLeft(n);
-    }
- 
-    private int height(ABCdinamic<K, V> n) {
-        if (n == null)
-            return -1;
-        return n.arrel.height;
-    }
- 
-    private void setBalance(NodeABC<K, V> n) {
-            reheight(n);
-			n.balance = height(n.fd) - height(n.fe);
-    }
-    
-    private void reheight(NodeABC<K,V> node){
-        if(node!=null){
-            node.height=1 + Math.max(height(node.fe), height(node.fd));
-        }
-    }
 	public boolean existeix(K k) {
 		if (arrel==null) return false;
 		else if (arrel.k.equals(k)) return true;
