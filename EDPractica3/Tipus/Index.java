@@ -41,22 +41,41 @@ public class Index{
 			}
 		}
 
+		/**
+		 * Getter de la llista
+		 * @return llista d'aparicions
+		 */
 		public Aparicio[] getLlista() {
 			return llista;
 		}
 
+		/**
+		 * Setter de la llista
+		 * @param llista
+		 */
 		public void setLlista(Aparicio[] llista) {
 			this.llista = llista;
 		}
 
+		/**
+		 * Getter de la posicio
+		 * @return posicio de la llista
+		 */
 		public int getPos() {
 			return pos;
 		}
 
+		/**
+		 * Setter de la posicio
+		 * @param pos
+		 */
 		public void setPos(int pos) {
 			this.pos = pos;
 		}
 
+		/**
+		 * toString de l'index, mostrara una llista d'aparicions
+		 */
 		@Override
 		public String toString() {
 			String out = "";

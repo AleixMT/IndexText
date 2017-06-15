@@ -2,11 +2,20 @@ package TAD;
 
 import java.util.Iterator;
 import TAD.TaulaHashEncadenadaIndirecta;
-
+/**
+ * Classe Iterator
+ * @author Aleix Marine i Cristina Izquierdo
+ *
+ * @param <T>
+ */
 public class MeuIterator<T> implements Iterator<T> {
-	private LlistaGenericaNoOrd<T> llista;	//nou atribut que ens guardarà una copia de la llista actual de punts
+	private LlistaGenericaNoOrd<T> llista;	//nou atribut que ens guardara una copia de la llista actual de punts
 	private int posicioIterator;
 	
+	/**
+	 * Constructor per una llista generica
+	 * @param ll - llista
+	 */
 	public MeuIterator(LlistaGenericaNoOrd<T> ll) {
 		llista=new LlistaGenericaNoOrd<T>(ll.getNum());
 		for (int i=0; i<ll.getNum(); i++) {
@@ -15,8 +24,12 @@ public class MeuIterator<T> implements Iterator<T> {
 		posicioIterator=0; 	// ens preparem per a retornar els elements a partir de la posicio 0
 	}
 	
+	/**
+	 * Constructor per una taula de hash encadenada indirecta
+	 * @param taula - taula de hash
+	 */
 	@SuppressWarnings("unchecked")
-	public MeuIterator(TaulaHashEncadenadaIndirecta taula){
+	public MeuIterator(@SuppressWarnings("rawtypes") TaulaHashEncadenadaIndirecta taula){
 		this.llista = new LlistaGenericaNoOrd<T>(taula.getCapacitatTaula());
 		for (int i = 0; i < taula.getCapacitatTaula(); i++) {
 			if (taula.getTaulaElements()[i]!=null){
@@ -26,10 +39,16 @@ public class MeuIterator<T> implements Iterator<T> {
 		posicioIterator=0;
 	}
 	
+	/**
+	 * Metode hasNext per a saber si queden mes elements
+	 */
 	public boolean hasNext() {
 		return ((posicioIterator<llista.getNum()));
 	}
 
+	/**
+	 * Metode next per a obtenir el seguent element
+	 */
 	public T next() {
 		T aux=llista.consultarIessim(posicioIterator);
 		posicioIterator++;

@@ -1,8 +1,8 @@
 package TAD;
 /**
- * Llista genèrica no ordenada
+ * Llista generica no ordenada
  * 
- * @author Professors de l'assignatura 16-17
+ * @author Aleix Marine i Cristina Izquierdo
  *
  */
 import java.util.*;
@@ -11,12 +11,20 @@ public class LlistaGenericaNoOrd<T> implements Iterable<T> {
 	private T[] llista;
 	private int num;
 	
+	/**
+	 * Constructor de la llista
+	 * @param dim - dimensio
+	 */
 	@SuppressWarnings("unchecked")
 	public LlistaGenericaNoOrd(int dim) {
 		llista=(T[])new Object[dim];
 		num=0;
 	}
 
+	/**
+	 * Metode per a afegir un element
+	 * @param p - element a afegir
+	 */
 	public void afegirElement(T p) {
 		if (num>=llista.length) {
 			// amplio
@@ -31,6 +39,10 @@ public class LlistaGenericaNoOrd<T> implements Iterable<T> {
 		num++;
 	}
 	
+	/**
+	 * Metode per a afegir un element a la llista
+	 * @param ll - llista on afegir-ho
+	 */
 	public void afegirElement(LlistaGenericaNoOrd<T> ll) {
 		int numElems=ll.getNum();
 		for (int i=0; i<numElems; i++) {
@@ -38,26 +50,37 @@ public class LlistaGenericaNoOrd<T> implements Iterable<T> {
 		}
 	}
 	
+	/**
+	 * Metode per a consultar l'element de la posicio
+	 * @param i - posicio
+	 * @return element
+	 */
 	public T consultarIessim(int i) {
 		if (i<num) return(llista[i]);
 		else return(null);
 	}
 	
+	/**
+	 * Getter del numero d'elements
+	 * @return numero d'elements
+	 */
 	public int getNum() {
 		return num;
 	}
 
+	/**
+	 * toString de la classe
+	 */
 	@Override
 	public String toString() {
 		return "LlistaPunts [llista=" + Arrays.toString(llista) + ", num=" + num + "]";
 	}
 
+	/**
+	 * Metode iterator
+	 */
 	public MeuIterator<T> iterator() {
 		MeuIterator<T> pI=new MeuIterator<T>(this);
 		return pI;
-	}
-
-
-	
-	
+	}	
 }
