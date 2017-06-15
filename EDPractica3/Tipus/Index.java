@@ -57,16 +57,9 @@ public class Index{
 		@Override
 		public String toString() {
 			String out = "";
-			for (int i=-1; i<pos; i++){
-				out+=llista[pos];
+			for (int i=0; i<=pos; i++){
+				out+=llista[i];
 			}
-			return out;
-		}
-		
-		
-		
-
-		
-		
-		
+			return out+"\n";
+		}		
 }

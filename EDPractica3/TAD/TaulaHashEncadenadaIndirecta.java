@@ -179,9 +179,10 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, V> implement
 		String out= "";
 		while (it.hasNext()){
 			aux=it.next(); //guardem la paraula per anar fent comprovacions
-			if (aux!=null){ //si no es null
+			while (aux!=null){ //si no es null
 				out+= aux.getClau() + " "; //posem la paraula del index (clau)
-				if(aux.getValor()!=null) out+=aux.getValor() +"\n"; //posem les aparicions que te (llista valors)
+				if(aux.getValor()!=null) out+=aux.getValor(); //posem les aparicions que te (llista valors)
+				aux=aux.getSeguent();
 			}
 		}
 		return out;

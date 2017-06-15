@@ -77,7 +77,7 @@ public class Main {
 		String entry = ""; //entrada generica de teclat.
 		while (!exit) //mentre que el usuari no indiqui l'estructura iterarem
 		{
-			System.out.println("Quina operacio vols fer?(Les aparicions de casa paraula es mostren com '3plana:linia')");
+			System.out.println("Quina operacio vols fer?(Les aparicions de cada paraula es mostren com 'plana:linia')");
 			System.out.println("1.- Mostrar index.");
 			System.out.println("2.- Consultar paraula a l'estructura.");
 			System.out.println("3.- Esborrar paraula.");
