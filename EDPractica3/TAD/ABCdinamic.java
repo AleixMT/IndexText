@@ -16,13 +16,12 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 		private int balance;
         private int height;
 		
-		@SuppressWarnings("unchecked")
-		public NodeABC(K k, V v) {
+		/**public NodeABC(K k, V v) {
 			this.k=k;
 			this.v = (V) new Index();
 			fe=null;
 			fd=null;
-		}
+		}**/
 		
 		@SuppressWarnings("unchecked")
 		public NodeABC(K k, V v, ABCdinamic<K,V> p) {
@@ -60,34 +59,33 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 	public ABCdinamic() {
 		arrel=null;
 	}
-	
+	/**
 	public ABCdinamic(K k, V v) {
 		arrel=new NodeABC<K,V>(k,v);
-	}
+	}**/
 	
 	public ABCdinamic(K k, V v, ABCdinamic<K,V> p) {
 		arrel=new NodeABC<K,V>(k,v, p);
 	}
+	
+	/**
+	 * Reequilibra un node rebut per peràmetre
+	 * @param n
+	 */
 	private void rebalance(NodeABC<K,V> n) {
-        setBalance(n);
-        if (n.balance == -2) {
-            if (height(n.fe.arrel.fe) >= height(n.fe.arrel.fd))
-                n = rotateRight(n);
-            else
-                n = rotateLeftThenRight(n);
- 
-        } else if (n.balance == 2) {
-            if (height(n.fd.arrel.fd) >= height(n.fd.arrel.fe))
-                n = rotateLeft(n);
-            else
-                n = rotateRightThenLeft(n);
+        setBalance(n);	/** Recalculem el factor d'equilibri de l'arbre**/
+        if (n.balance == 2) /** Si el factor d'equilibri és 2 dos, vol dir que tenim més nodes a a la esquerra**/
+        { /** Si l'altura fe del fe és més gran que el fd del fe llavors fem rotació simple a la dreta **/
+        	if (height(n.fe.arrel.fe) >= height(n.fe.arrel.fd)) n = rotateRight(n);		 
+            else n = rotateLeftThenRight(n); /** Sinó vol dir que l'arbre necessita doble rotació esquerra i després dreta **/
+        } 
+        else if (n.balance == -2) 
+        { /** Si l'altura fd del fd és més gran que el fe del fd llavors fem rotació simple a l'esquerre **/
+            if (height(n.fd.arrel.fd) >= height(n.fd.arrel.fe)) n = rotateLeft(n);
+            else n = rotateRightThenLeft(n); /** Sinó vol dir que l'arbre necessita doble rotació dreta i després esquerra **/
         }
- 
-        if (n.p.arrel != null) {
-            rebalance(n.p.arrel);
-        } else {
-            arrel = n;
-        }
+        if (n.p != null) rebalance(n.p.arrel);	/** Si tenim un arbre pare, llavors balancegem el node arrel del pare **/
+        else arrel = n;		/** fem un set del nou arbre equilibrat **/
     }
  
 	/**
@@ -95,33 +93,33 @@ public class ABCdinamic<K extends Comparable<K>, V> implements TAD_ABC<K, V>, Cl
 	 * els nodes per a arribar a l'arrel. Si hi ha un amb el mateix identificador retorna false.  
 	 */
 	public boolean afegir(K k, V v) {
-		if (esBuit())	// Si és buit creem el node a l'arrel
+		if (esBuit())	/** Si és buit creem el node a l'arrel **/
 		{
-			arrel=new NodeABC<K,V>(k,v);
+			arrel=new NodeABC<K,V>(k,v, null);
 		} 
 		else 
 		{
-			if (arrel.k.equals(k)) return false;	// Si ja s'ha afegit retorna fal
-			else if (arrel.k.compareTo(k)>0) {	// Arbre esquerra
-				if (arrel.fe!=null) arrel.fe.afegir(k, v);	
+			if (arrel.k.equals(k)) return false;	/** Si ja s'ha afegit retorna fals **/
+			else if (arrel.k.compareTo(k)>0) 
+			{	/** Arbre esquerra **/
+				if (arrel.fe!=null) arrel.fe.afegir(k, v);	/** Si el fill esquerra està buit, executem afegir sobre ell **/
 				else 
 				{
-					arrel.fe=new ABCdinamic<K,V>(k,v, this);
-					rebalance(this.arrel); 
-
+					arrel.fe=new ABCdinamic<K,V>(k,v, this);	/** Si està buit, creem el nou node **/
+					rebalance(this.arrel); 	/** I rebalancegem l'arrel **/
 				}
 			}
-			else if (arrel.k.compareTo(k)<0) 	// arbre dret
-			{
-				if (arrel.fd!=null) arrel.fd.afegir(k, v);
+			else if (arrel.k.compareTo(k)<0) 	
+			{ /** Arbre esquerra **/
+				if (arrel.fd!=null) arrel.fd.afegir(k, v); /** Si el fill esquerra està buit, executem afegir sobre ell **/
 				else 
 				{
-					arrel.fd=new ABCdinamic<K,V>(k,v, this);
-					rebalance(this.arrel); 
+					arrel.fd=new ABCdinamic<K,V>(k,v, this); /** Si està buit, creem el nou node **/
+					rebalance(this.arrel); /** I rebalancegem l'arrel **/
 				}
 			}
 		}
-		return true; 
+		return true; /** Hem afegit, per tant retornem cert **/
 	}
 
 	
