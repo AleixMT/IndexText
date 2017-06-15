@@ -1,7 +1,11 @@
 package Tipus;
 
 import java.util.Arrays;
-
+/**
+ * Classe tipus Index, contindra una llista d'aparicions de la paraula
+ * @author Aleix Marine i Cristina Izquierdo
+ *
+ */
 public class Index{
 		private Aparicio[] llista;
 		private int pos;
@@ -12,12 +16,11 @@ public class Index{
 			}
 		
 		/**
-		 * Metode per afegir una aparicio per a la paraula. Rep la la plana i la linia on 
-		 * ha hagut l'aparicio. Retorna true si s'ha afegit una aparicio. Retorna false si s'ha 
-		 * registrat una aparicio en aquella mateixa linia i per tant no s'afegeix res.
-		 * @param plana
-		 * @param linia
-		 * @return
+		 * Metode per afegir una aparicio per a la paraula.
+		 * @param plana - plana on apareix la paraula
+		 * @param linia - linia on apareix la paraula
+		 * @return true - si s'ha afegit una aparicio
+		 * @return false - si s'ha registrat una aparicio en aquella mateixa linia i per tant no s'afegeix res.
 		 */
 		public boolean AfegirAparicio(int plana, int linia){
 			if (pos == -1)
@@ -28,7 +31,7 @@ public class Index{
 			}
 			else
 			{
-				if (this.llista[pos].equals(plana, linia)) return false;	
+				if (this.llista[pos].equals(plana, linia)) return false; //ja existeix
 				else
 				{
 					this.pos++;

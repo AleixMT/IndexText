@@ -170,20 +170,27 @@ public class Main {
 					while (stringToken.hasMoreElements()){
 						//llegim paraula a paraula i ho posem a un string
 						String paraula = stringToken.nextElement().toString();
+						paraula.toLowerCase();//passem a minuscules totes les paraules
+						if (paraula.endsWith(",") || paraula.endsWith(".") || paraula.endsWith(";")){
+								paraula = paraula.substring(0, paraula.length()-1); //eliminem el punt o coma
+						}
 						if(paraula.startsWith("$"))
 						{ //es la primera vegada que es troba aquesta paraula, s'ha de guardar a l'estructura
-							String aux = paraula.substring(1, paraula.length()); //eliminem el $
-							if (aux.endsWith(",") || aux.endsWith(".") || aux.endsWith(";")){
-								aux = aux.substring(0, aux.length()-1); //eliminem el punt o coma
+							paraula = paraula.substring(1, paraula.length()); //eliminem el $
+							if (paraula.length()>1 && paraula.charAt(1)=='\''){//si la paraula conte apostrof, com "l'arbre"
+							paraula = paraula.substring(2, paraula.length()); //tallem les dos primeres lletres
 							}
-							tad.afegir(aux, null); //afegim la paraula arreglada (sense $ ni '.' o ',') a l'estructura
-							tad.afegirAparicio(aux, plana, nLinia); //afegim
+							tad.afegir(paraula, null); //afegim la paraula arreglada (sense $ ni '.' o ',') a l'estructura
+							tad.afegirAparicio(paraula, plana, nLinia); //afegim
 							//System.out.println("Nova Paraula: "+aux);
 						}
 						//si la paraula no conte un $ pot ser per dues raons:
 						//no es la primera vegada que apareix
 						//no s'ha d'afegir
-						else{ 
+						else{
+							if (paraula.length()>1 && paraula.charAt(1)=='\''){//si la paraula conte apostrof, com "l'arbre"
+								paraula = paraula.substring(2, paraula.length()); //tallem les dos primeres lletres
+							}
 							if (tad.consultar(paraula)!=null){//si ja esta afegida
 								tad.afegirAparicio(paraula, plana, nLinia);
 							}
