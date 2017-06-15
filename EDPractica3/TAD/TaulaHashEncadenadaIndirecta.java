@@ -162,9 +162,9 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, V> implement
 		int clauHash = Math.abs(k.hashCode() % capacitatTaula);
 		NodeHash<K, V> n = taulaElements[clauHash];
 
-		while (n != null && !n.getClau().equals(k))
+		while (n != null && !n.getClau().equals(k)){
 			n = n.getSeguent();
-
+		}
 		return (n != null) ? n.getValor() : null;
 	}
 
@@ -175,13 +175,13 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, V> implement
 	public String toString() 
 	{
 		MeuIterator<NodeHash<K,V>> it = new MeuIterator<NodeHash<K,V>>(this);
-		NodeHash<K,V> aux;
+		NodeHash<K,V> aux; 
 		String out= "";
 		while (it.hasNext()){
-			aux=it.next();
-			if (aux!=null){
-				out+= aux.getClau() + " ";
-				if(aux.getValor()!=null) out+=aux.getValor() +"\n";
+			aux=it.next(); //guardem la paraula per anar fent comprovacions
+			if (aux!=null){ //si no es null
+				out+= aux.getClau() + " "; //posem la paraula del index (clau)
+				if(aux.getValor()!=null) out+=aux.getValor() +"\n"; //posem les aparicions que te (llista valors)
 			}
 		}
 		return out;

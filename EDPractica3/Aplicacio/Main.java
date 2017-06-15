@@ -77,7 +77,7 @@ public class Main {
 		String entry = ""; //entrada generica de teclat.
 		while (!exit) //mentre que el usuari no indiqui l'estructura iterarem
 		{
-			System.out.println("Quina operacio vols fer?");
+			System.out.println("Quina operacio vols fer?(Les aparicions de casa paraula es mostren com '3plana:linia')");
 			System.out.println("1.- Mostrar index.");
 			System.out.println("2.- Consultar paraula a l'estructura.");
 			System.out.println("3.- Esborrar paraula.");
@@ -98,6 +98,7 @@ public class Main {
 					if 	(tad.consultar(entry)==null){
 						System.out.print("Aquesta paraula no es troba en l'estructura.");
 					}
+					else System.out.println(tad.consultar(entry));
 					break;
 				case 3: 
 					System.out.print("Indica la paraula que vols esborrar: ");
@@ -106,6 +107,7 @@ public class Main {
 					if (tad.consultar(entry)==null){
 						System.out.print("Aquesta paraula no es troba en l'estructura.");
 					}
+					else tad.esborrar(entry);
 					break; 
 				case 4: 
 					exit=true;
