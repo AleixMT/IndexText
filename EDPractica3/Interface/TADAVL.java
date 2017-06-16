@@ -52,7 +52,7 @@ public abstract interface TADAVL<K extends Comparable<K>, V> extends TADIndex<K,
 	public K minim();
 	/**
 	 * retorna cert si l'arbre està buit, sino retorna fals
-	 * @return
+	 * @return cert si l'estructura està buida flas si està plena
 	 */
 	public boolean esBuit();
 	

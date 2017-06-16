@@ -15,7 +15,7 @@ public abstract interface TADIndex <K extends Comparable<K>, V>{
 	/**
 	 * Esborra un element de l'index (deixa de fer el seguiment)
 	 */
-	public boolean esborrar(K k);
+	public boolean esborrar(K k); 
 	
 	/**
 	 * Consulta un element (paraula) de l'índex
@@ -28,7 +28,7 @@ public abstract interface TADIndex <K extends Comparable<K>, V>{
 	/**
 	 * Mira si existeix l'element amb la clau k
 	 * @param k
-	 * @return
+	 * @return cert si la clau es troba a l'estructura, fals si no hi és
 	 */
 	boolean existeix(K k);
 }

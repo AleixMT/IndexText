@@ -85,10 +85,11 @@ public class Main {
 			System.out.println("5.- Sortir del programa.");
 			try
 			{
-				ti=System.nanoTime();
+				ti=System.nanoTime();	// Iniciallització que no es fa servir
 				opt=teclat.nextInt();
 				switch(opt) {
 				case 1:
+					ti=System.nanoTime();
 					System.out.println(tad.mostrarIndex());
 					break;
 				case 2: 
