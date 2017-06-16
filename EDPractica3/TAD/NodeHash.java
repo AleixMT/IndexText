@@ -9,7 +9,7 @@ import Tipus.Index;
  * @param <K> - clau
  * @param <V> - valor
  */
-public class NodeHash<K,V> {
+public class NodeHash<K extends Comparable<K>,V> implements Comparable<NodeHash<K,V>>{
 	private K clau;
 	private V valor;
 	private NodeHash<K,V> seguent;
@@ -26,6 +26,17 @@ public class NodeHash<K,V> {
 		seguent=ant;
 	}
 	
+	/**
+	 * Un altre constructor amb tots els parametres
+	 * @param k clau
+	 * @param v dades
+	 * @param ant punter a nodehash
+	 */
+	public NodeHash(K k, V v, NodeHash<K,V> ant) {
+		this.clau=k;
+		this.valor = v;
+		this.seguent=ant;
+	}
 	/**
 	 * Getter de la clau
 	 * @return clau
@@ -80,5 +91,9 @@ public class NodeHash<K,V> {
 	@Override
 	public String toString() {
 		return "NodeHash [clau=" + clau + ", valor=" + valor + ", seguent=" + seguent + "]";
+	}
+
+	public int compareTo(NodeHash<K, V> arg0) {
+		return this.clau.compareTo(arg0.clau);
 	}
 }

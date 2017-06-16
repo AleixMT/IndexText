@@ -1,6 +1,4 @@
 package Tipus;
-
-import java.util.Arrays;
 /**
  * Classe tipus Index, contindra una llista d'aparicions de la paraula
  * @author Aleix Marine i Cristina Izquierdo

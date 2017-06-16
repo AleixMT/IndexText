@@ -24,7 +24,7 @@ public abstract interface TADIndex <K extends Comparable<K>, V>{
 	/**
 	 * Mostra per pantalla tot l'index
 	 */
-	public String toString();
+	public String mostrarIndex();
 	/**
 	 * Mira si existeix l'element amb la clau k
 	 * @param k

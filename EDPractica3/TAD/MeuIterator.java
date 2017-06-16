@@ -8,7 +8,7 @@ import TAD.TaulaHashEncadenadaIndirecta;
  *
  * @param <T>
  */
-public class MeuIterator<T> implements Iterator<T> {
+public class MeuIterator<T extends Comparable<T>> implements Iterator<T> {
 	private LlistaGenericaNoOrd<T> llista;	//nou atribut que ens guardara una copia de la llista actual de punts
 	private int posicioIterator;
 	
@@ -24,9 +24,17 @@ public class MeuIterator<T> implements Iterator<T> {
 		posicioIterator=0; 	// ens preparem per a retornar els elements a partir de la posicio 0
 	}
 	
+	public MeuIterator(LlistaGenericaOrd<T> ll){
+		llista=new LlistaGenericaNoOrd<T>(ll.getNum());
+		for (int i=0; i<ll.getNum(); i++) {
+			llista.afegirElement(ll.consultarIessim(i));
+		}
+		posicioIterator=0; 	// ens preparem per a retornar els elements a partir de la posicio 0
+	}
 	/**
 	 * Constructor per una taula de hash encadenada indirecta
 	 * @param taula - taula de hash
+	 * Utilitzem la supressió del warning rawtypes ja que en aquest constructor concretament els parametres K i V donen problemes
 	 */
 	@SuppressWarnings("unchecked")
 	public MeuIterator(@SuppressWarnings("rawtypes") TaulaHashEncadenadaIndirecta taula){

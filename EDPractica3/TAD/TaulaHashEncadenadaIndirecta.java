@@ -1,7 +1,4 @@
 package TAD;
-
-import java.util.Iterator;
-
 import Interface.TADTaulaHashGenerica;
 import Tipus.Index;
 /**
@@ -228,18 +225,26 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, V> implement
 	/**
 	 * toString de la classe. Utilitza el MeuIterator per a recorrer la taula
 	 */
-	public String toString() 
+	public String mostrarIndex() 
 	{
 		MeuIterator<NodeHash<K,V>> it = new MeuIterator<NodeHash<K,V>>(this);
+		LlistaGenericaOrd<NodeHash<K,V>> ll = new LlistaGenericaOrd<NodeHash<K,V>>(10);
 		NodeHash<K,V> aux; 
-		String out= "";
 		while (it.hasNext()){
 			aux=it.next(); //guardem la paraula per anar fent comprovacions
-			while (aux!=null){ //si no es null
-				out+= aux.getClau() + " "; //posem la paraula del index (clau)
-				if(aux.getValor()!=null) out+=aux.getValor(); //posem les aparicions que te (llista valors)
+			while (aux!=null)
+			{ //si no es null
+				ll.afegirElement(aux);	// afegim a la llista ordenadament
 				aux=aux.getSeguent();
 			}
+		}
+		MeuIterator<NodeHash<K,V>> i = new MeuIterator<NodeHash<K,V>>(ll);
+		String out= "";
+		while (i.hasNext())
+		{
+			aux = i.next();
+			out+= aux.getClau() + " "; //posem la paraula del index (clau)
+			if(aux.getValor()!=null) out+=aux.getValor(); //posem les aparicions que te (llista valors)
 		}
 		return out;
 	}

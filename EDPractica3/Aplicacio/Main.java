@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 import Interface.TADIndex;
-import TAD.ABCdinamic;
+import TAD.AVLdinamic;
 import TAD.JavaUtil;
 import TAD.TaulaHashEncadenadaIndirecta;
 import Tipus.Index;
@@ -50,18 +50,18 @@ public class Main {
 					tad = (TADIndex<String, Index>) new TaulaHashEncadenadaIndirecta<String, Index>(1000);	
 					break;
 				case 2: 
-					tad = (TADIndex<String, Index>) new ABCdinamic<String, Index>();
+					tad = (TADIndex<String, Index>) new AVLdinamic<String, Index>();
 					break; 
 				case 3: 
 					tad = (TADIndex<String, Index>) new JavaUtil<String, Index>(1000);
 					break;
-				default: System.out.println("Aquesta opcio no esta a la llista. \n");
+				default: System.out.println("\nAquesta opcio no esta a la llista. \n");
 				break;	//Funciona com una excepcio per a un valor numeric no acceptat
 				}
 			}
 			catch (InputMismatchException e) 
 			{
-				System.out.println("Exceptions.InputMismatchException: ERROR:Has introduit una opcio incorrecta, torna-ho a intentar. \n");
+				System.out.println("\nExceptions.InputMismatchException: ERROR:Has introduit una opcio incorrecta, torna-ho a intentar. \n");
                 teclat.nextLine(); 
 			}
 		}
@@ -89,14 +89,14 @@ public class Main {
 				opt=teclat.nextInt();
 				switch(opt) {
 				case 1:
-					System.out.println(tad.toString());
+					System.out.println(tad.mostrarIndex());
 					break;
 				case 2: 
 					System.out.print("Indica la paraula que vols consultar: ");
 					entry = teclat.next();
 					ti=System.nanoTime();
 					if 	(tad.consultar(entry)==null){
-						System.out.print("Aquesta paraula no es troba en l'estructura.");
+						System.out.print("\nAquesta paraula no es troba en l'estructura.");
 					}
 					else System.out.println(tad.consultar(entry));
 					break;
@@ -105,7 +105,7 @@ public class Main {
 					entry = teclat.next();
 					ti=System.nanoTime();
 					if (tad.consultar(entry)==null){
-						System.out.print("Aquesta paraula no es troba en l'estructura.");
+						System.out.print("\nAquesta paraula no es troba en l'estructura.");
 					}
 					else tad.esborrar(entry);
 					break; 
@@ -115,11 +115,11 @@ public class Main {
 				case 5: //apagar la consola
 					for (int i = 0; i < 100; ++i) System.out.println();//netejem la pantalla omplint-la d'espais
 					System.exit(0); break; //termina l'aplicacio que s'esta executant al moment
-				default: System.out.println("Aquesta opcio no esta a la llista... \n");
+				default: System.out.println("\nAquesta opcio no esta a la llista... \n");
 				break;	//Funciona com una excepcio per a un valor numeric no acceptat
 				}
 				tf = System.nanoTime();
-				System.out.println("Ha tardat "+ (tf-ti)/Math.pow(10, 9)+ " segons");
+				System.out.println("\nHa tardat "+ (tf-ti)/Math.pow(10, 9)+ " segons");
 			}
 			catch (InputMismatchException e) 
 			{
@@ -200,7 +200,7 @@ public class Main {
 				buffer.close();
 				correcte = true; //ja s'han acabat d'afegir les dades
 				tf=System.nanoTime();
-				System.out.println("Ha trigat "+ (tf-ti)+ " segons.");
+				System.out.println("\nHa tardat "+ (tf-ti)/Math.pow(10, 9)+ " segons");
 					
 
 			}

@@ -3,10 +3,9 @@ package TAD;
 import Interface.TADIndex;
 import Tipus.Index;
 
+import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
+
 /**
  * Classe wrapper per a fer una taula de Hash amb una coleccio del java.util
  * Hashtable
@@ -74,15 +73,21 @@ public class JavaUtil <K extends Comparable<K>, V> implements TADIndex<K, V> {
 	/**
 	 * Metode toString de la classe
 	 */
-	@Override
-	public String toString() {
-		Iterator<Entry<K, V>>  it;
-		Map.Entry<K,V> entry;
+	public String mostrarIndex() {
+		Enumeration<K> k = taula.keys();
+	    LlistaGenericaOrd<NodeHash<K,V>> ll = new LlistaGenericaOrd<NodeHash<K,V>>(10);
+		while (k.hasMoreElements())
+		{
+			K aux = k.nextElement();
+			ll.afegirElement(new NodeHash<K,V>(aux, taula.get(aux), null));
+		}
+		MeuIterator<NodeHash<K,V>> it = new MeuIterator<NodeHash<K,V>>(ll);
 		String out= "";
-		it = taula.entrySet().iterator();
-		while (it.hasNext()) {
-		    entry = it.next();
-		   out+=(entry.getKey().toString() + " " +entry.getValue().toString());
+		NodeHash<K,V> auxn;
+		while (it.hasNext()) 
+		{
+		    auxn = it.next();
+			out+=(auxn.getClau() + " " +auxn.getValor());
 		}
 		return out;
 	}

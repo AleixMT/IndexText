@@ -7,7 +7,7 @@ package TAD;
  */
 import java.util.*;
 
-public class LlistaGenericaNoOrd<T> implements Iterable<T> {
+public class LlistaGenericaNoOrd<T extends Comparable<T>> implements Iterable<T> {
 	private T[] llista;
 	private int num;
 	
@@ -17,7 +17,7 @@ public class LlistaGenericaNoOrd<T> implements Iterable<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	public LlistaGenericaNoOrd(int dim) {
-		llista=(T[])new Object[dim];
+		llista=(T[]) new Comparable[dim];
 		num=0;
 	}
 

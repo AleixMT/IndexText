@@ -4,7 +4,7 @@ package Tipus;
  * @author Aleix Marine i Cristina Izquierdo
  *
  */
-public class Aparicio {
+public class Aparicio{
 	private int plana;
 	private int linia;
 	
