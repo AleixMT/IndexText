@@ -170,7 +170,7 @@ public class TaulaHashEncadenadaIndirecta<K extends Comparable <K>, V> implement
 	  * Metode per a esborrar un element de la taula
 	  */
 	public boolean esborrar(K k) {
-		int clauHash = k.hashCode() % capacitatTaula;
+		int clauHash = Math.abs(k.hashCode() % capacitatTaula);
 
 		NodeHash<K, V> nant = taulaElements[clauHash];
 
